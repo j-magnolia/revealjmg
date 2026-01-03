@@ -23,14 +23,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/jonathan-g/revealjg/blob/main/DESCRIPTION)
 
-El Hattab H, Allaire J, Gilligan J (2025). *revealjg: R Markdown Format
+El Hattab H, Allaire J, Gilligan J (2026). *revealjg: R Markdown Format
 for 'reveal.js' Presentations*. R package version 1.0.0,
 <https://github.com/jonathan-g/revealjg>.
 
     @Manual{,
       title = {revealjg: R Markdown Format for 'reveal.js' Presentations},
       author = {Hakim {El Hattab} and JJ Allaire and Jonathan Gilligan},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0.0},
       url = {https://github.com/jonathan-g/revealjg},
     }
