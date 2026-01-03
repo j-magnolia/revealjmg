@@ -402,31 +402,37 @@ revealjs_presentation <- function(incremental = FALSE,
       custom_asset_path <-  revealjs_path
     }
     if (!self_contained || identical(.Platform$OS.type, "windows")) {
+      message("rendering: self_contained = ", self_contained,
+              ", OS = ", .Platform$OS.type)
       message("revealjs_path = ", revealjs_path,
               ", custom_asset_path = ", custom_asset_path,
-              "current directory = ", getwd(), ", output_dir = ",
+              ", current directory = ", getwd(), ", output_dir = ",
               output_dir)
       revealjs_path <- relative_to(
         output_dir, render_supporting_files(revealjs_path, lib_dir))
       custom_asset_path <- relative_to(output_dir, custom_asset_path)
       message("revealjs_path = ", revealjs_path,
               ", custom_asset_path = ", custom_asset_path,
-              "current directory = ", getwd(), ", output_dir = ",
+              ", current directory = ", getwd(), ", output_dir = ",
               output_dir)
     }else  {
       revealjs_path <- pandoc_path_arg(revealjs_path)
       custom_asset_path <- pandoc_path_arg(custom_asset_path)
     }
-    message("setting revealjs-url in pre-processor")
+    message("setting revealjs-url to ", revealjs_path,
+            " in pre-processor")
     args <- c(args, pandoc_variable_arg("revealjs-url", revealjs_path))
     if (! is.null(custom_asset_path) && ! is.na(custom_asset_path)) {
-      message("setting local-asset-url in pre-processor")
-      args <- c(args, pandoc_variable_arg("local-asset-url", custom_asset_path))
+      message("setting local-asset-url to ", custom_asset_path,
+              " in pre-processor")
+      args <- c(args, pandoc_variable_arg("local-asset-url",
+                                          custom_asset_path))
     }
 
     # highlight
     message("setting highlight args in pre-processor")
-    args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
+    args <- c(args, pandoc_highlight_args(highlight,
+                                          default = "pygments"))
 
     # return additional args
     args
