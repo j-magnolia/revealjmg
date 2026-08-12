@@ -1,0 +1,666 @@
+/**
+ * Solarized Light theme for reveal.js.
+ * Author: Achim Staebler
+ */
+
+// Load utils
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:math';
+@use 'template/mixins' as mixins;
+
+
+
+// Solarized colors by Ethan Schoonover
+$base03: #002b36;
+$base02: #073642;
+$base01: #586e75;
+$base00: #657b83;
+$base0: #839496;
+$base1: #93a1a1;
+$base2: #eee8d5;
+$base3: #fdf6e3;
+$yellow: #b58900;
+$orange: #cb4b16;
+$red: #dc322f;
+$magenta: #d33682;
+$violet: #6c71c4;
+$blue: #268bd2;
+$cyan: #2aa198;
+$green: #859900;
+$altgreen:  #4fa843;
+$darkblue:  #134671;
+$medblue:  #4080C0;
+$darkgreen: #006000;
+$black: black;
+$yellow: yellow;
+$darkred: darkred;
+
+$credit-color: #a0a0a0;
+$tborder-color: gray;
+
+$active-color: $blue;
+
+// Vertical spacing between blocks of text
+$blockMargin: 20px;
+
+// Inject theme variables (with some overrides)
+@use 'template/settings' with (
+	$background-color: $base3,
+
+	$main-color: $base00,
+	$heading-color: $base01,
+
+	$link-color: $active-color,
+	$link-color-hover: color.scale($active-color, $lightness: 20%),
+	$selection-color: white,
+	$selection-background-color: $magenta,
+
+	$overlay-element-bg-color: '0 0 0',
+	$overlay-element-fg-color: '240 240 240',
+
+	$main-font: "'Noto Sans', sans-serif",
+	$main-font-size: 52px,
+
+	$heading-font: "'PT Sans', Impact, sans-serif",
+	$heading-line-height: 0.9,
+	$heading-text-transform: none,
+	$heading1-text-shadow: none,
+
+	$code-font: "'Anonymous Pro', monospace",
+
+);
+
+$code-color: $darkblue;
+$inline-code-color: $blue;
+$code-background-color: #C0C0C0;
+
+
+// Inject the theme template
+@use 'template/theme';
+
+// Include theme-specific fonts
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro:400,700,400italic,700italic);
+
+
+// Change text when the background is inverted
+@include mixins.dark-bg-text-color(#ffffff);
+
+.reveal h1 {
+  margin-bottom: 50px;
+}
+
+.reveal .h3 {
+  margin-top: 10px;
+}
+
+.reveal .author {
+  font-size: 1.2em;
+  text-transform: none;
+}
+
+.reveal .date {
+  font-size: 0.8em;
+ }
+
+ .reveal blockquote {
+   box-shadow: none;
+ }
+
+ .reveal ol {
+ margin-left: 2em;
+ }
+
+ .reveal ol[type=A] {
+ list-style-type: upper-alpha;
+ }
+
+ .reveal ol[type=a] {
+ list-style-type: lower-alpha;
+ }
+
+ .reveal sub {
+ font-size: 60%;
+ }
+
+ .reveal sup {
+ font-size: 60%;
+ }
+
+ .reveal .small {
+	 font-size:0.6em;
+	 line-height: 1.2em;
+ }
+
+.reveal pre {
+	display: block;
+	position: relative;
+	width: 90%;
+	margin: $blockMargin auto;
+
+	text-align: left;
+	font-size: 0.55em;
+	font-family: monospace;
+	line-height: 1.2em;
+
+	word-wrap: break-word;
+
+	box-shadow: none;
+}
+
+.reveal .max-listing pre,
+.reveal pre.max-listing {
+  width: 100%;
+}
+
+.reveal code {
+	font-family: var(--r-code-font);
+	color: $inline-code-color;
+}
+
+.reveal span.code {
+  font-family: var(--r-code-font);
+  color: $inline-code-color;
+}
+
+.reveal pre code {
+  font-size: 1.3em;
+  line-height: 1.2em;
+	font-family: var(--r-code-font);
+	color: $code-color;
+	background-color: $code-background-color;
+	display: block;
+	padding: 5px;
+	max-height: 100%;
+	overflow: visible;
+	word-wrap: normal;
+}
+
+.reveal .slides .leftslide {
+  section, div
+  {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+.reveal .leftslide {
+  p, ul, ol, li, blockquote
+  {
+    text-align: left;
+  }
+
+  p, ul, ol, li
+  {
+    width: 100%;
+  }
+
+  p, ul, ol
+  {
+    margin-left: 1em;
+  }
+
+  li > p,
+  table
+  {
+    margin-left: 0;
+  }
+
+  h1, h2
+  {
+    text-align: center;
+  }
+}
+
+.reveal .toptitle {
+  h1, h2 {
+    top: 50px;
+    margin-bottom: 6in;
+  }
+}
+
+.reveal .whiteslide {
+  background-color: white;
+}
+
+.reveal .blackslide {
+  background-color: black;
+}
+
+.reveal .whitebox {
+  div, p, img {
+    background-color: white;
+  }
+}
+
+.reveal div.whitebox1 {
+  > p:first-child,
+  > img:first-child
+  {
+    background-color: white;
+  }
+}
+
+.reveal .yellowbox {
+  div, p, img {
+    background-color: yellow;
+  }
+}
+
+.reveal div.yellowbox1 {
+  > p:first-child,
+  > img:first-child
+  {
+    background-color: yellow;
+  }
+}
+
+.reveal .nomargin {
+  div, p, ul, ol, li, blockquote, img,
+  > p, {
+    margin: 0;
+  }
+}
+
+.reveal .slides section {
+  .fragment.highlight-med-blue,
+  .fragment.highlight-current-med-blue,
+  .fragment.highlight-dark-green,
+  .fragment.highlight-current-dark-green {
+  	opacity: 1;
+	  visibility: inherit;
+  }
+}
+
+@mixin fragment-color($name, $color) {
+  .reveal .slides section {
+    .fragment.highlight-#{$name}.visible,
+    .fragment.highlight-current-#{$name}.current-fragment {
+      color: $color;
+      font-weight: bold;
+    }
+  }
+}
+
+@each $name, $color in ('med-blue': $medblue, 'dark-green': $darkgreen,
+                       'green': $altgreen) {
+                         @include fragment-color($name, $color);
+                       }
+
+.reveal .hidetitle {
+  h1, h2  {
+    display: none;
+  }
+}
+
+.reveal h1 { font-size: 2.0em; }
+.reveal h2 { font-size: 1.5em; }
+.reveal h3 { font-size: 1.25em; }
+.reveal h4 { font-size: 1em; }
+
+.reveal h1.title {
+  font-size: 2em;
+  margin-bottom: 50px;
+
+  + h2.subtitle,
+  + p.subtitle{
+    font-size: 1.6em;
+    margin-top: -20px;
+    margin-bottom: 50px;
+  }
+}
+
+.reveal .slides>section {
+  padding: 0 0;
+
+  >section {
+    padding: 0 0;
+  }
+}
+
+.reveal img,
+.reveal section img {
+  border: none;
+}
+
+.reveal table {
+  border-spacing: 2px;
+  font-size: 0.7 em;
+
+  &, th, td {
+  border-width: 2px;
+  border-style: solid;
+  border-color: $tborder-color;
+  border-collapse: collapse;
+  }
+
+  th, td {
+  padding-left: 10px;
+  padding-right: 25px;
+  }
+
+  th {
+  font-weight: bold;
+  }
+}
+
+.reveal .bordered table,
+.reveal table.bordered {
+  thead, tbody, th, tr, td
+  .reveal div.bordered {
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+  }
+}
+
+.reveal .noborder table,
+.reveal table.noborder {
+  &, thead, tbody, th, tr, td
+  {
+    border-style: none;
+  }
+}
+
+.reveal div.noborder,
+.reveal img.noborder,
+.reveal .noborder img {
+  border-style: none;
+}
+
+.reveal .leftlist {
+  ol, ul {
+    width: 100%;
+  }
+}
+
+.reveal .stretch code {
+  max-height: 100%;
+}
+
+@mixin margins($name, $type, $edge, $size-name, $size) {
+  .reveal {
+    $elements: 'h1', 'h2', 'h3', 'h4', 'h5', 'div', 'div.bare',
+           'pre', 'pre.bare', '.bare pre',
+           'img', 'img.bare', '.bare img', '.bare img .bare',
+           'section', 'section.bare';
+    @each $element in $elements {
+      #{$element}.#{$name}-#{$size-name} {
+        #{$type}-#{$edge}: $size;
+           }
+    }
+  }
+}
+
+@each $abbr, $type in ('m': 'margin', 'p': 'padding') {
+  @each $edge-name, $edge in ('top': 'top', 'bot': 'bottom', 'left': 'left', 'right': 'right') {
+    $sizes: (half: 0.5 rem);
+    @for $i from 1 through 5 { $sizes: map.set($sizes, $i, $i rem); }
+    @each $size-name, $size in $sizes {
+        @include margins(#{$abbr}#{$edge-name}, $type, $edge, $size-name, $size);
+      }
+  }
+}
+
+@each $abbr, $type in ('m': 'margin', 'p': 'padding') {
+  @each $edge-name, $edge in ('top': 'top', 'bot': 'bottom', 'left': 'left', 'right': 'right') {
+    $sizes: ('half-em': 0.5 em);
+    @for $i from 1 through 5 { $sizes: map.set($sizes, #{$i}-em, $i em); }
+    @each $size-name, $size in $sizes {
+        @include margins(#{$abbr}#{$edge-name}, $type, $edge, $size-name, $size);
+      }
+  }
+}
+
+.reveal {
+  .lh-1 {
+    div, p, li, ul, ol, blockquote {
+      line-height: 1;
+    }
+  }
+  .lh-p8 {
+    div, p, li, ul, ol, blockquote {
+      line-height: 0.8;
+    }
+  }
+}
+
+.reveal .bare {
+  div > p, div > img, p, img {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+}
+
+.reveal .flush {
+  div > p, div > img, p, img {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+}
+
+@mixin sc-set-margins($name, $margin, $size) {
+  .pre {
+    &.#{$name}, &.#{$name}.SourceCode,
+    &.SourceCode.#{$name},
+    &.#{$name} > div.SourceCode,
+    &.#{$name} > code.SourceCode {
+      #{$margin}: #{$size};
+    }
+  }
+
+  div.#{$name} > div.SourceCode,
+  div.#{$name} > code.SourceCode,
+  .reveal .#{$name} pre.SourceCode {
+    #{$margin}: #{$size};
+  }
+}
+
+$sc-margins: [["bare", "margin", 0]];
+
+@for $i from 1 through 2 {
+  $tmp: [
+    [mtop-#{$i}, 'margin-top', ($i + 'rem')],
+    [mbot-#{$i}, 'margin-bottom', ($i + 'rem')]
+    ];
+
+  // @debug "tmp =  #{$tmp}";
+
+  $sc-margins: list.join($sc-margins, $tmp, $separator: comma);
+
+  // @debug "sc-margins = #{$sc-margins}";
+}
+
+// @debug 'sc-margins = #{$sc-margins}';
+
+
+@each $name, $margin, $size in $sc-margins {
+  @include sc-set-margins($name, $margin, $size)
+}
+
+
+
+.reveal .credit {
+  p, ul, ol, li, a:link, a:visited {
+  color: $credit-color;
+  }
+
+  div, p, ul {
+    font-size:30%;
+  }
+
+  div, p {
+  text-align:right;
+  }
+}
+
+@mixin txtalign($just) {
+  .reveal #{$just + 'align'} {
+    div, p, ul, ol {
+      text-align: $just;
+    }
+  }
+}
+
+@each $just in (left, right, center) {
+  @include txtalign($just);
+}
+
+.reveal .slides div {
+  &.column {
+    width: 49%;
+    vertical-align: top;
+  }
+
+  &.topalign {
+    vertical-align: top;
+  }
+
+  &.leftcol {
+    text-align: left;
+    margin-right: auto;
+  }
+
+  &.rightcol {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  &.centercol {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.reveal {
+  div, p, span, img {
+    &.vtop {
+      vertical-align: top;
+    }
+
+    &.vbot {
+      vertical-align: bottom;
+    }
+
+    &.vmid {
+      vertical-align: middle;
+    }
+  }
+
+  div.vcenter {
+    display: flex;
+    align-items: center;
+  }
+
+  .textcenter {
+    div, p {
+      text-align: center;
+    }
+  }
+
+  .textleft {
+    div, p {
+      text-align: left;
+    }
+
+    ul, ol, dl {
+      display: block;
+    }
+  }
+
+    .textright {
+    div, p {
+      text-align: right;
+    }
+
+    ul, ol, dl {
+      display: block;
+    }
+  }
+}
+
+.reveal .whitetitle {
+  h1, h2, h3, h4, h5 { color: white; }
+}
+
+.reveal .yellowtitle {
+  h1, h2, h3, h4, h5 { color: yellow; }
+}
+
+.reveal .blacktitle {
+  h1, h2, h3, h4, h5 { color: black; }
+}
+
+@mixin colortext($color, $colorval) {
+  .reveal #{$color}text {
+    section, div, span, p, li, ul, ol,
+    a:link, a:visited {
+      color: $colorval;
+    }
+  }
+
+  .reveal span.#{$color}text {
+    color: $colorval;
+  }
+}
+
+@each $color, $colorval in ('black': black, 'yellow': yellow,
+                            'darkblue' : $darkblue, 'darkgreen': $darkgreen,
+                            'medblue': $medblue) {
+  @include colortext($color, $colorval);
+}
+
+@mixin scaletext($name, $percent) {
+  $scale: calc(0.01 * $percent);
+  $inv-scale: calc(1.0 / $scale);
+  $important: '';
+  @if ($percent == 100) {
+    $important: '!important';
+  }
+
+  .reveal {
+    .t#{$percent}, .#{$name} {
+      h1 {
+        font-size: calc($inv-scale * 2.0em) #{$important};
+      }
+      h2 {
+        font-size: calc($inv-scale * 1.5em) #{$important};
+      }
+
+      &, pre, pre code {
+        font-size: #{$percent + '%'} #{$important};
+      }
+    }
+
+    h1.t#{$percent}, h1.#{$name},
+    h2.t#{$percent}, h2.#{$name} {
+        font-size: #{$percent + "%"} #{$important};
+    }
+  }
+}
+
+@each $name, $percent in (hundred: 100, ninetyfive: 95, ninety: 90,
+                          eightyfive: 85, eighty: 80, seventyfive: 75,
+                          seventy: 70, sixtyfive: 65, sixty: 60,
+                          fiftyfive: 55, fifty: 50, fortyfive: 45,
+                          forty: 40) {
+  @include scaletext($name, $percent)
+
+}
+
+.reveal div.left-eqn span.math.display > div.MathJax_Display {
+  display: flex !important;
+  justify-content: flex-start;
+}
+
+.reveal div.right-eqn span.math.display > div.MathJax_Display {
+  display: flex !important;
+  justify-content: flex-end;
+}
