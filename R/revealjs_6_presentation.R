@@ -89,60 +89,85 @@ globalVariables(c(".", "extension", "value"))
 #'
 #'
 #' @export
-revealjs_presentation <- function(incremental = FALSE,
-                                  center = FALSE,
-                                  width = NULL,
-                                  height = NULL,
-                                  margin = NULL,
-                                  slide_level = 2,
-                                  fig_width = 8,
-                                  fig_height = 6,
-                                  fig_retina = if (!fig_caption) 2,
-                                  fig_caption = FALSE,
-                                  self_contained = TRUE,
-                                  smart = TRUE,
-                                  theme = "simple",
-                                  custom_theme = NULL,
-                                  custom_theme_dark = FALSE,
-                                  custom_asset_path = NULL,
-                                  transition = "default",
-                                  custom_transition = NULL,
-                                  background_transition = "default",
-                                  custom_background_transition = NULL,
-                                  reveal_options = NULL,
-                                  reveal_plugins = NULL,
-                                  reveal_version = "6.0.1",
-                                  reveal_location = "default",
-                                  resource_location = "default",
-                                  controls = FALSE,
-                                  highlight = "default",
-                                  mathjax = "default",
-                                  mathjax_scale = NULL,
-                                  tex_extensions = NULL,
-                                  tex_defs = NULL,
-                                  template = "default",
-                                  css = NULL,
-                                  includes = NULL,
-                                  md_extensions = NULL,
-                                  keep_md = FALSE,
-                                  lib_dir = NULL,
-                                  pandoc_args = NULL,
-                                  extra_dependencies = NULL,
-                                  custom_plugins = NULL,
-                                  no_postprocess = FALSE,
+revealjs_6_presentation <- function(incremental = FALSE,
+                                    center = FALSE,
+                                    width = NULL,
+                                    height = NULL,
+                                    margin = NULL,
+                                    slide_level = 2,
+                                    fig_width = 8,
+                                    fig_height = 6,
+                                    fig_retina = if (!fig_caption) 2,
+                                    fig_caption = FALSE,
+                                    self_contained = TRUE,
+                                    smart = TRUE,
+                                    theme = "simple",
+                                    custom_theme = NULL,
+                                    custom_theme_dark = FALSE,
+                                    custom_asset_path = NULL,
+                                    transition = "default",
+                                    custom_transition = NULL,
+                                    background_transition = "default",
+                                    custom_background_transition = NULL,
+                                    reveal_options = NULL,
+                                    reveal_plugins = NULL,
+                                    reveal_version = "6.0.1",
+                                    reveal_location = "default",
+                                    resource_location = "default",
+                                    controls = FALSE,
+                                    highlight = "default",
+                                    mathjax = "default",
+                                    mathjax_scale = NULL,
+                                    tex_extensions = NULL,
+                                    tex_defs = NULL,
+                                    template = "default",
+                                    css = NULL,
+                                    includes = NULL,
+                                    md_extensions = NULL,
+                                    keep_md = FALSE,
+                                    lib_dir = NULL,
+                                    pandoc_args = NULL,
+                                    extra_dependencies = NULL,
+                                    custom_plugins = NULL,
+                                    no_postprocess = FALSE,
                                   ...) {
 
 
   # Reveal version: layout of files changed a lot between versions
   # 4 and 6.
 
+  if (str_to_lower(reveal_location) != "default") {
+      reveal_package <- try(
+        jsonlite::read_json(file.path(reveal_location, "package.json"))
+      )
+      if (inherits(reveal_package, "try-error")) {
+        reveal_package = NULL
+      }
+  }
+
+  if (str_to_lower(reveal_version) == "default" &&
+      ! is.null(reveal_package)) {
+    reveal_version <- reveal_package$version
+  }
+
+  if (! is.null(reveal_package)) {
+    reveal_versions <- c(reveal_version, reveal_package$version)
+  } else {
+    reveal_versions <- reveal_version
+  }
+
   reveal_new_version <- semver::parse_version(reveal_version) >=
     semver::parse_version("6.0.0")
 
-  if (reveal_new_version) {
-    resource_loc <- "revealjs-6"
-  } else {
-    resource_loc <- "revealjs-3"
+  if (all(reveal_new_version) != any(reveal_new_version)) {
+    stop("Error: inconsistent reveal versions: ", reveal_versions[1],
+         " and ", reveal_versions[2])
+  }
+
+  reveal_new_version = all(reveal_new_version)
+
+  if (! reveal_new_version) {
+    stop("Cannot build a revealjs_6 presentation for reveal ", reveal_version)
   }
 
   # function to lookup reveal resource
@@ -190,11 +215,11 @@ revealjs_presentation <- function(incremental = FALSE,
 
   # width and height
   if (! is.null(width))
-    args <- c(args, "--variable", paste0("revealjs-width=", width))
+    args <- c(args, "--variable", paste0("width=", width))
   if (! is.null(height))
-    args <- c(args, "--variable", paste0("revealjs-height=", height))
+    args <- c(args, "--variable", paste0("height=", height))
   if (! is.null(margin))
-    args <- c(args, "--variable", paste0("revealjs-margin=", margin))
+    args <- c(args, "--variable", paste0("margin=", margin))
 
   # slide level
   args <- c(args, "--slide-level", as.character(slide_level))
@@ -464,7 +489,7 @@ revealjs_presentation <- function(incremental = FALSE,
 }
 
 
-revealjs_themes <- function() {
+revealjs_6_themes <- function() {
   c("default",
     "beige",
     "black",
@@ -478,13 +503,14 @@ revealjs_themes <- function() {
     "simple",
     "sky",
     "solarized",
+    "solarized_jmg",
     "white",
     "white-contrast",
     "custom")
 }
 
 
-revealjs_transitions <- function() {
+revealjs_6_transitions <- function() {
   c(
     "default",
     "none",
@@ -497,4 +523,125 @@ revealjs_transitions <- function() {
   )
 }
 
+revealjs_6_defaults <- function() {
+  list(
+    'abstract': '',
+    'author': '',
+    'author-meta': '',
+    'autoPlayMedia': FALSE,
+    'autoSlide': FALSE,
+    'autoSlideMethod': '',
+    'autoSlideStoppable': '',
+    'background-image': '',
+    'backgroundTransition': '',
+    'backgroundcolor': '',
+    'center': '',
+    'class_date': '',
+    'class_no': '',
+    'controls': '',
+    'controlsBackArrows': '',
+    'controlsLayout': '',
+    'controlsTutorial': '',
+    'course': '',
+    'course_name': '',
+    'csl-css': '',
+    'css': '',
+    'date': '',
+    'date-meta': '',
+    'defaultTiming': '',
+    'dir': '',
+    'disableLayout': '',
+    'display': '',
+    'displaymath-css': '',
+    'document-css': '',
+    'embedded': '',
+    'fontcolor': '',
+    'fontsize': '',
+    'fragmentInURL': '',
+    'fragments': '',
+    'hash': '',
+    'hashOneBasedIndex': '',
+    'header-includes': '',
+    'height': '1080',
+    'help': 'true',
+    'hideCursorTime': '',
+    'hideInactiveCursor': '',
+    'highlight-js': '',
+    'highlighting-css': '',
+    'highlightjs-theme': '',
+    'history': '',
+    'idprefix': '',
+    'include-after': '',
+    'include-before': '',
+    'institute': '',
+    'keyboard': '',
+    'keywords': '',
+    'lang': '',
+    'linestretch': '',
+    'linkcolor': '',
+    'local-asset-url': '',
+    'local-theme': '',
+    'loop': '',
+    'mainfont': '',
+    'margin-bottom': '',
+    'margin-left': '',
+    'margin-right': '',
+    'margin-top': '',
+    'math': '',
+    'mathjax': '4',
+    'mathjax-font': '',
+    'mathjax-packages': ('mhchem', 'ams'),
+    'mathjax-url': '',
+    'maxwidth': '',
+    'mobileViewDistance': '',
+    'monobackgroundcolor': '',
+    'monofont': '',
+    'mouseWheel': '',
+    'navigationMode': '',
+    'overview': '',
+    'pagetitle': '',
+    'parallaxBackgroundHorizontal': '',
+    'parallaxBackgroundImage': '',
+    'parallaxBackgroundSize': '',
+    'parallaxBackgroundVertical': '',
+    'pause': '',
+    'preloadIframes': '',
+    'previewLinks': '',
+    'progress': '',
+    'quotes': '',
+    'respondToHashChanges': '',
+    'revealjs-custom-plugin-url': '',
+    'revealjs-url': '',
+    'rtl': '',
+    'scrollActivationWidth': '',
+    'scrollLayout': '',
+    'scrollProgress': '',
+    'scrollProgressAuto': '',
+    'scrollSnap': '',
+    'semester': '',
+    'sep': '',
+    'showNotes': '',
+    'showSlideNumber': '',
+    'shuffle': '',
+    'slideNumber': '',
+    'subtitle': '',
+    'table-caption-below': '',
+    'table-of-contents': '',
+    'tex-macros': '',
+    'theme': '',
+    'theme-dark': '',
+    'title': '',
+    'title-prefix': '',
+    'title-slide-attributes': '',
+    'toc': '',
+    'toc-title': '',
+    'touch': '',
+    'transition': '',
+    'transitionSpeed': '',
+    'view': '',
+    'viewDistance': '',
+    'width': '1920',
+    'year': ''
+  )
 
+}

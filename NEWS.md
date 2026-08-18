@@ -1,3 +1,11 @@
+## revealjg 2.0.0
+
+* Updated to use reveal.js version 6.0
+
+## revealjg 1.0.0
+
+* Clean up and start porting to use multiple versions of reveal.js
+
 ## revealjg 0.9.9006
 
 * Updated to latest personal tweaks to reveal.js from my teaching stuff.

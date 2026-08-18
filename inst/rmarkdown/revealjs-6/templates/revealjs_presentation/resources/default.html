@@ -1,23 +1,24 @@
 <!DOCTYPE html>
+<!-- JMG Reveal.js Template -->
 <html$if(lang)$ lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
 <head>
-  <meta charset="utf-8">
-  <meta name="generator" content="pandoc">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
 $for(author-meta)$
-  <meta name="author" content="$author-meta$">
+  <meta name="author" content="$author-meta$" />
 $endfor$
 $if(date-meta)$
-  <meta name="dcterms.date" content="$date-meta$">
+  <meta name="dcterms.date" content="$date-meta$" />
 $endif$
 $if(keywords)$
-  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$">
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="$revealjs-url$/dist/reset.css">
-  <link rel="stylesheet" href="$revealjs-url$/dist/reveal.css">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+  <link rel="stylesheet" href="$revealjs-url$/dist/reset.css" />
+  <link rel="stylesheet" href="$revealjs-url$/dist/reveal.css" />
   <style>
     .reveal .sourceCode {  /* see #7635 */
       overflow: visible;
@@ -108,20 +109,26 @@ $body$
   <script src="$revealjs-url$/dist/reveal.js"></script>
 
   <!-- reveal.js plugins -->
+  $if(plugin-notes)$
   <script src="$revealjs-url$/dist/plugin/notes.js"></script>
+  $endif$
+  $if(plugin-search)$
   <script src="$revealjs-url$/dist/plugin/search.js"></script>
+  $endif$
+  $if(plugin-zoom)$
   <script src="$revealjs-url$/dist/plugin/zoom.js"></script>
+  $endif$
 $if(mathjax)$
   <script src="$revealjs-url$/dist/plugin/math.js"></script>
 $endif$
 $if(highlight-js)$
   <script src="$revealjs-url$/dist/plugin/highlight.js"></script>
 $endif$
-$if(chalkboard)$
+$if(plugin-chalkboard)$
 <!-- Font awesome is required for the chalkboard plugin -->
 <!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/js/all.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
 <!-- -->
 <!-- Custom controls plugin is used to for opening and closing annotation modes. -->
 $if(revealjs-custom-plugin-url)$
@@ -134,7 +141,7 @@ $else$
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
 <!-- Chalkboard plugin -->
 <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
-$endif
+$endif$
 $endif$
   <script>
 
@@ -403,15 +410,53 @@ $if(mathjax4)$
               skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
             },
         },
+$elsif(mathjax3)$
+        mathjax3: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/tex-mml-chtml.js',
+            loader: {
+              load: [
+                $for(mathjax-packages)$'[tex]/$mathjax-packages$'$sep, $endfor$
+                ],
+              },
+            chtml: {
+              matchFontHeight: true,
+              adaptiveCSS: true,
+            },
+            svg: {
+              fontCache: 'global',
+            },
+            tex: {
+              inlineMath: [
+                ['$', '$'],
+                ['\\(', '\\)'],
+              ],
+              displayMath: [
+                ['$$', '$$'],
+                ['\\[', '\\]'],
+              ],
+              packages: {
+                '[+]': [$for(mathjax-packages)$'$mathjax-packages$'$sep, $endfor$],
+              },
+              $if(tex-macros)$
+              macros: {
+                $for(tex-macros)$'$it.key$': $if(it.values/allbutlast)$['$it.value/first$', $it.value/last$$else$'$it.value$'$endif$$sep$,
+                $endfor$
+              },
+              $endif$
+            },
+            options: {
+              skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            },
+        },
 $else$
         math: {
-          mathjax: '$mathjaxurl$',
+          mathjax: '$mathjax-url$',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
-            inlineMath: [['\\(','\\)']],
-            displayMath: [['\\[','\\]']],
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'],['\\[','\\]']],
             balanceBraces: true,
-            processEscapes: false,
+            processEscapes: true,
             processRefs: true,
             processEnvironments: true,
             preview: 'TeX',
@@ -422,7 +467,7 @@ $else$
         },
 $endif
 $endif$
-$if(chalkboard)$
+$if(plugin-chalkboard)$
   customcontrols: {
     controls: [
       { icon: '<i class="fa fa-pen-square"></i>',
@@ -438,13 +483,17 @@ $if(chalkboard)$
 $endif$
         // reveal.js plugins
         plugins: [
-$if(chalkboard)$
+$if(plugin-chalkboard)$
           RevealChalkboard,
           RevealCustomControls,
 $endif
 $if(mathjax)$
 $if(mathjax4)$
           RevealMath.Mathjax4,
+$elsif(mathjax3)$
+          RevealMath.Mathjax3,
+$elsif(mathjax2)$
+          RevealMath.Mathjax2,
 $else$
           RevealMath,
 $endif$
@@ -452,14 +501,20 @@ $endif$
 $if(highlight-js)$
           RevealHighlight,
 $endif$
+$if(plugin-notes)$
           RevealNotes,
+$endif$
+$if(plugin-search)$
           RevealSearch,
+$endif$
+$if(plugin-zoom)$
           RevealZoom
-        ]
+$endif$
+          ]
       });
     </script>
   <script>
-    ${ (qr-box.js) }$
+    ${ (qr-box.js) }
   </script>
   $for(include-after)$
   $include-after$

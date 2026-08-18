@@ -8,6 +8,7 @@ examples/
 \.git/
 ^(.*/)*\.gitkeep$
 ^(.*/)*\.travis.yml
+^([a-zA-Z0-9._-]+)\.py$
 ^inst/reveal\.js[0-9._\-]*/[^/]*\.json$
 ^inst/reveal\.js[0-9._\-]*/[^/]*\.js$
 ^inst/reveal\.js[0-9._\-]*/[^/]*\.html$
@@ -19,7 +20,6 @@ examples/
 ^inst/reveal\.js[0-9._\-]*/examples/
 ^inst/reveal\.js[0-9._\-]*/test/
 ^inst/reveal\.js[0-9._\-]*/\..*$
-
 ^inst/rmarkdown/assets/css/theme/source/
 ^inst/rmarkdown/assets/css/theme/template/
 ^\.github$

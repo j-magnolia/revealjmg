@@ -62,7 +62,7 @@ globalVariables(c(".", "extension", "value"))
 #' @param no_postprocess Omit the post-processing step.
 #' @param ... Ignored
 #'
-#' @return R Markdown output format to pass to \code{\link[rmarkdown]{render}}
+#' @return R Markdown output format to pass to \code{\link{render}}
 #'
 #' @details
 #'
@@ -89,68 +89,92 @@ globalVariables(c(".", "extension", "value"))
 #'
 #'
 #' @export
-revealjs_presentation <- function(incremental = FALSE,
-                                  center = FALSE,
-                                  width = NULL,
-                                  height = NULL,
-                                  margin = NULL,
-                                  slide_level = 2,
-                                  fig_width = 8,
-                                  fig_height = 6,
-                                  fig_retina = if (!fig_caption) 2,
-                                  fig_caption = FALSE,
-                                  self_contained = TRUE,
-                                  smart = TRUE,
-                                  theme = "simple",
-                                  custom_theme = NULL,
-                                  custom_theme_dark = FALSE,
-                                  custom_asset_path = NULL,
-                                  transition = "default",
-                                  custom_transition = NULL,
-                                  background_transition = "default",
-                                  custom_background_transition = NULL,
-                                  reveal_options = NULL,
-                                  reveal_plugins = NULL,
-                                  reveal_version = "6.0.1",
-                                  reveal_location = "default",
-                                  resource_location = "default",
-                                  controls = FALSE,
-                                  highlight = "default",
-                                  mathjax = "default",
-                                  mathjax_scale = NULL,
-                                  tex_extensions = NULL,
-                                  tex_defs = NULL,
-                                  template = "default",
-                                  css = NULL,
-                                  includes = NULL,
-                                  md_extensions = NULL,
-                                  keep_md = FALSE,
-                                  lib_dir = NULL,
-                                  pandoc_args = NULL,
-                                  extra_dependencies = NULL,
-                                  custom_plugins = NULL,
-                                  no_postprocess = FALSE,
-                                  ...) {
-
+revealjs_3_presentation <- function(incremental = FALSE,
+                                    center = FALSE,
+                                    width = NULL,
+                                    height = NULL,
+                                    margin = NULL,
+                                    slide_level = 2,
+                                    fig_width = 8,
+                                    fig_height = 6,
+                                    fig_retina = if (!fig_caption) 2,
+                                    fig_caption = FALSE,
+                                    self_contained = TRUE,
+                                    smart = TRUE,
+                                    theme = "simple",
+                                    custom_theme = NULL,
+                                    custom_theme_dark = FALSE,
+                                    custom_asset_path = NULL,
+                                    transition = "default",
+                                    custom_transition = NULL,
+                                    background_transition = "default",
+                                    custom_background_transition = NULL,
+                                    reveal_options = NULL,
+                                    reveal_plugins = NULL,
+                                    reveal_version = "3.8.0",
+                                    reveal_location = "default",
+                                    resource_location = "default",
+                                    controls = FALSE,
+                                    highlight = "default",
+                                    mathjax = "default",
+                                    mathjax_scale = NULL,
+                                    tex_extensions = NULL,
+                                    tex_defs = NULL,
+                                    template = "default",
+                                    css = NULL,
+                                    includes = NULL,
+                                    md_extensions = NULL,
+                                    keep_md = FALSE,
+                                    lib_dir = NULL,
+                                    pandoc_args = NULL,
+                                    extra_dependencies = NULL,
+                                    custom_plugins = NULL,
+                                    no_postprocess = FALSE,
+                                    ...) {
 
   # Reveal version: layout of files changed a lot between versions
   # 4 and 6.
 
-  reveal_new_version <- semver::parse_version(reveal_version) >=
-    semver::parse_version("6.0.0")
-
-  if (reveal_new_version) {
-    resource_loc <- "revealjs-6"
-  } else {
-    resource_loc <- "revealjs-3"
+  if (str_to_lower(reveal_location) != "default") {
+    reveal_package <- try(
+      jsonlite::read_json(file.path(reveal_location, "package.json"))
+    )
+    if (inherits(reveal_package, "try-error")) {
+      reveal_package = NULL
+    }
   }
+
+  if (str_to_lower(reveal_version) == "default" &&
+      ! is.null(reveal_package)) {
+    reveal_version <- reveal_package$version
+  }
+
+  if (! is.null(reveal_package)) {
+    reveal_versions <- c(reveal_version, reveal_package$version)
+  } else {
+    reveal_versions <- reveal_version
+  }
+
+  reveal_new_version <- semver::parse_version(reveal_version) >=
+    semver::parse_version("5.0.0")
+
+  if (all(reveal_new_version) != any(reveal_new_version)) {
+    stop("Error: inconsistent reveal versions: ", reveal_versions[1],
+         " and ", reveal_versions[2])
+  }
+
+  reveal_new_version = all(reveal_new_version)
+
+  if (! reveal_new_version) {
+    stop("Cannot build a revealjs_3 presentation for reveal ", reveal_version)
+  }
+
 
   # function to lookup reveal resource
   reveal_resources <- function() {
     if(identical(resource_location, "default")) {
-      system.file(file.path("rmarkdown", resource_loc,
-                            "templates/revealjs_presentation/resources"),
-                            package = "revealjg")
+      system.file("rmarkdown/templates/revealjs_presentation/resources",
+                  package = "revealjg")
     } else {
       resource_location
     }
@@ -159,11 +183,9 @@ revealjs_presentation <- function(incremental = FALSE,
   # base pandoc options for all reveal.js output
   args <- c()
 
-
   # template path and assets
   if (identical(template, "default")) {
-    default_template <- file.path(reveal_resources(),
-                                  reveal_default_template)
+    default_template <- file.path(reveal_resources(), "default.html")
     args <- c(args, "--template", pandoc_path_arg(default_template))
   } else {
     if(!file.exists(template)) {
@@ -396,44 +418,37 @@ revealjs_presentation <- function(incremental = FALSE,
     } else {
       revealjs_path <- file.path(reveal_location, reveal_home)
     }
-    if (reveal_new_version) {
+    if (semver::parse_version(reveal_version) >=
+        semver::parse_version("5.0.0")) {
       revealjs_path <- file.path(revealjs_path, "dist")
     }
-    if (is.null(custom_asset_path) || identical(custom_asset_path, "default")) {
+    if (identical(custom_asset_path, "default")) {
       custom_asset_path <-  revealjs_path
     }
     if (!self_contained || identical(.Platform$OS.type, "windows")) {
-      message("rendering: self_contained = ", self_contained,
-              ", OS = ", .Platform$OS.type)
       message("revealjs_path = ", revealjs_path,
               ", custom_asset_path = ", custom_asset_path,
-              ", current directory = ", getwd(), ", output_dir = ",
+              "current directory = ", getwd(), ", output_dir = ",
               output_dir)
       revealjs_path <- relative_to(
         output_dir, render_supporting_files(revealjs_path, lib_dir))
       custom_asset_path <- relative_to(output_dir, custom_asset_path)
       message("revealjs_path = ", revealjs_path,
               ", custom_asset_path = ", custom_asset_path,
-              ", current directory = ", getwd(), ", output_dir = ",
+              "current directory = ", getwd(), ", output_dir = ",
               output_dir)
     }else  {
       revealjs_path <- pandoc_path_arg(revealjs_path)
       custom_asset_path <- pandoc_path_arg(custom_asset_path)
     }
-    message("setting revealjs-url to ", revealjs_path,
-            " in pre-processor")
+    message("setting revealjs-url in pre-processor")
     args <- c(args, pandoc_variable_arg("revealjs-url", revealjs_path))
-    if (! is.null(custom_asset_path) && ! is.na(custom_asset_path)) {
-      message("setting local-asset-url to ", custom_asset_path,
-              " in pre-processor")
-      args <- c(args, pandoc_variable_arg("local-asset-url",
-                                          custom_asset_path))
-    }
+    message("setting local-asset-url in pre-processor")
+    args <- c(args, pandoc_variable_arg("local-asset-url", custom_asset_path))
 
     # highlight
     message("setting highlight args in pre-processor")
-    args <- c(args, pandoc_highlight_args(highlight,
-                                          default = "pygments"))
+    args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
 
     # return additional args
     args

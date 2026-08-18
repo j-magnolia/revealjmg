@@ -1,8 +1,8 @@
-Package: revealjg
+Package: revealjmg
 Type: Package
 Title: R Markdown Format for 'reveal.js' Presentations
-Version: 1.0.0
-Date: 2025-11-25
+Version: 2.0.0
+Date: 2026-08-12
 Authors@R: c(
     person("Hakim", "El Hattab", role = c("aut", "cph"),
        comment = "reveal.js-3.2.0, https://github.com/hakimel/reveal.js"),
