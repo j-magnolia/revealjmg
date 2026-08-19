@@ -117,6 +117,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
                                     controls = FALSE,
                                     highlight = "default",
                                     mathjax = "default",
+                                    mathjax_version = 4,
                                     mathjax_scale = NULL,
                                     tex_extensions = NULL,
                                     tex_defs = NULL,
@@ -168,6 +169,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   if (! reveal_new_version) {
     stop("Cannot build a revealjs_6 presentation for reveal ", reveal_version)
+  } else {
+    resource_loc <- "revealjs-6"
   }
 
   # function to lookup reveal resource
@@ -175,7 +178,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
     if(identical(resource_location, "default")) {
       system.file(file.path("rmarkdown", resource_loc,
                             "templates/revealjs_presentation/resources"),
-                            package = "revealjg")
+                            package = "revealjmg")
     } else {
       resource_location
     }
@@ -590,7 +593,7 @@ revealjs_6_defaults <- function() {
     'math': '',
     'mathjax': '4',
     'mathjax-font': '',
-    'mathjax-packages': ('mhchem', 'ams'),
+    'mathjax-packages': c('mhchem', 'ams'),
     'mathjax-url': '',
     'maxwidth': '',
     'mobileViewDistance': '',
