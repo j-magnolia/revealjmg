@@ -1,6 +1,6 @@
 ---
 title: "Untitled"
-output: revealjg::revealjs_presentation
+output: revealjmg::revealjs_presentation
 ---
 
 ## R Markdown

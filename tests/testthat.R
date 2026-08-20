@@ -1,4 +1,4 @@
 library(testthat)
-library(revealjg)
+library(revealjmg)
 
-test_check("revealjg")
+test_check("revealjmg")

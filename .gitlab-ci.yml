@@ -1,7 +1,7 @@
 image: jgilligan/jg-verse:4.5.2
 
 variables:
-  PKGNAME: "revealjg"
+  PKGNAME: "revealjmg"
   R_LIBS_USER: "$CI_PROJECT_DIR/ci/lib"
   CRAN_REPOS: "https://cran.rstudio.com/"
 

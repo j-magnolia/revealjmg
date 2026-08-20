@@ -46,9 +46,9 @@
 #'   `fade-up`, `fade-down`, `fade-left`, `fade-right`, `fade-in-then-out`,
 #'   and `fade-in-then-semi-out`
 #'
-revealjg_postprocessor <- function(metadata, input_file, output_file, clean, verbose) {
+revealjmg_postprocessor <- function(metadata, input_file, output_file, clean, verbose) {
   if (verbose) {
-    message("Revealjg postprocessor starting...")
+    message("Revealjmg postprocessor starting...")
   }
 
   color_list = c("red", "green", "blue", "med-blue", "dark-green")

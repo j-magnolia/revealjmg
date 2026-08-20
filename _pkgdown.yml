@@ -1,11 +1,11 @@
-url: https://jonathan-g.github.io/revealjg
+url: https://j-magnolia.github.io/revealjmg
 
 destination: docs
 home:
   title: RMarkdown format for `reveal.js` presentations
 author:
-  Jonathan Gilligan:
-    href: https://www.jonathangilligan.org/
+  J. Magnolia Gilligan:
+    href: https://www.magnoliagilligan.org/
 template:
   bootstrap: 5
   params:

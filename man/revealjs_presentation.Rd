@@ -33,7 +33,6 @@ revealjs_presentation(
   controls = FALSE,
   highlight = "default",
   mathjax = "default",
-  mathjax_version = 4,
   mathjax_scale = NULL,
   tex_extensions = NULL,
   tex_defs = NULL,
@@ -187,7 +186,8 @@ Markdown HTML output formatter \code{\link[rmarkdown:html_document_base]{rmarkdo
 
 \item{no_postprocess}{Omit the post-processing step.}
 
-\item{...}{Ignored}
+\item{...}{Extra arguments, passed to the child presentation
+generators.}
 }
 \value{
 R Markdown output format to pass to \code{\link[rmarkdown]{render}}
@@ -202,13 +202,13 @@ will be produced, with level 1 headers building horizontally and level 2
 headers building vertically.
 
 For additional documentation on using revealjs presentations see
-\href{https://github.com/jonathan-g/revealjg}{https://github.com/jonathan-g/revealjg}.
+\href{https://github.com/j-magnolia/revealjmg}{https://github.com/j-magnolia/revealjmg}.
 }
 \examples{
 \dontrun{
 
 library(rmarkdown)
-library(revealjg)
+library(revealjmg)
 
 # simple invocation
 render("pres.Rmd", revealjs_presentation())

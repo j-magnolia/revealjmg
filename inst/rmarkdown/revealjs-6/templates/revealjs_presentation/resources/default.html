@@ -17,8 +17,8 @@ $endif$
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
-  <link rel="stylesheet" href="$revealjs-url$/dist/reset.css" />
-  <link rel="stylesheet" href="$revealjs-url$/dist/reveal.css" />
+  <link rel="stylesheet" href="$revealjs-url$/reset.css" />
+  <link rel="stylesheet" href="$revealjs-url$/reveal.css" />
   <style>
     .reveal .sourceCode {  /* see #7635 */
       overflow: visible;
@@ -27,7 +27,7 @@ $endif$
   </style>
 $if(local-theme)$
 <!-- theme = $local-theme$ -->
-<link rel="stylesheet" href="$local-asset-url$/dist/theme/$local-theme$.css" id="theme">
+<link rel="stylesheet" href="$local-asset-url$/theme/$local-theme$.css" id="theme">
 $if(theme-dark)$
 <style type="text/css">
 .reveal section img {
@@ -37,15 +37,15 @@ $if(theme-dark)$
 $endif$
 $else$$if(theme)$
 <!-- theme = $theme$ -->
-  <link rel="stylesheet" href="$revealjs-url$/dist/theme/$theme$.css" id="theme">
+  <link rel="stylesheet" href="$revealjs-url$/theme/$theme$.css" id="theme">
 $else$
-  <link rel="stylesheet" href="$revealjs-url$/dist/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="$revealjs-url$/theme/solarized.css" id="theme">
 $endif$$endif$
 $for(css)$
   <link rel="stylesheet" href="$css$"/>
 $endfor$
 $if(highlight-js)$
-  <link rel="stylesheet" href="$revealjs-url$/dist/plugin/highlight/$highlightjs-theme$.css">
+  <link rel="stylesheet" href="$revealjs-url$/plugin/highlight/$highlightjs-theme$.css">
 $endif$
 $for(css)$
   <link rel="stylesheet" href="$css$"/>
@@ -106,23 +106,23 @@ $body$
     </div>
   </div>
 
-  <script src="$revealjs-url$/dist/reveal.js"></script>
+  <script src="$revealjs-url$/reveal.js"></script>
 
   <!-- reveal.js plugins -->
   $if(plugin-notes)$
-  <script src="$revealjs-url$/dist/plugin/notes.js"></script>
+  <script src="$revealjs-url$/plugin/notes.js"></script>
   $endif$
   $if(plugin-search)$
-  <script src="$revealjs-url$/dist/plugin/search.js"></script>
+  <script src="$revealjs-url$/plugin/search.js"></script>
   $endif$
   $if(plugin-zoom)$
-  <script src="$revealjs-url$/dist/plugin/zoom.js"></script>
+  <script src="$revealjs-url$/plugin/zoom.js"></script>
   $endif$
 $if(mathjax)$
-  <script src="$revealjs-url$/dist/plugin/math.js"></script>
+  <script src="$revealjs-url$/plugin/math.js"></script>
 $endif$
 $if(highlight-js)$
-  <script src="$revealjs-url$/dist/plugin/highlight.js"></script>
+  <script src="$revealjs-url$/plugin/highlight.js"></script>
 $endif$
 $if(plugin-chalkboard)$
 <!-- Font awesome is required for the chalkboard plugin -->
@@ -348,7 +348,7 @@ $else$
 $endif$
 $if(height)$
         height: $height$,
-$else
+$else$
         // default: HDMI 1920 x 1080
         height: 1080,
 $endif$
@@ -372,13 +372,13 @@ $if(mathjax4)$
             mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js',
             loader: {
               load: [
-                $for(mathjax-packages)$'[tex]/$mathjax-packages$'$sep, $endfor$
+                $for(mathjax-packages)$'[tex]/$mathjax-packages$'$sep$, $endfor$
                 ],
               },
             output: {
               $if(mathjax-font)$
               font: '$mathjax-font$',
-              $endif
+              $endif$
             },
             chtml: {
               matchFontHeight: true,
@@ -389,15 +389,15 @@ $if(mathjax4)$
             },
             tex: {
               inlineMath: [
-                ['$', '$'],
+                ['$$', '$$'],
                 ['\\(', '\\)'],
               ],
               displayMath: [
-                ['$$', '$$'],
+                ['$$$$', '$$$$'],
                 ['\\[', '\\]'],
               ],
               packages: {
-                '[+]': [$for(mathjax-packages)$'$mathjax-packages$'$sep, $endfor$],
+                '[+]': [$for(mathjax-packages)$'$mathjax-packages$'$sep$, $endfor$],
               },
               $if(tex-macros)$
               macros: {
@@ -410,12 +410,12 @@ $if(mathjax4)$
               skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
             },
         },
-$elsif(mathjax3)$
+$elseif(mathjax3)$
         mathjax3: {
             mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/tex-mml-chtml.js',
             loader: {
               load: [
-                $for(mathjax-packages)$'[tex]/$mathjax-packages$'$sep, $endfor$
+                $for(mathjax-packages)$'[tex]/$mathjax-packages$'$sep$, $endfor$
                 ],
               },
             chtml: {
@@ -427,15 +427,15 @@ $elsif(mathjax3)$
             },
             tex: {
               inlineMath: [
-                ['$', '$'],
+                ['$$', '$$'],
                 ['\\(', '\\)'],
               ],
               displayMath: [
-                ['$$', '$$'],
+                ['$$$$', '$$$$'],
                 ['\\[', '\\]'],
               ],
               packages: {
-                '[+]': [$for(mathjax-packages)$'$mathjax-packages$'$sep, $endfor$],
+                '[+]': [$for(mathjax-packages)$'$mathjax-packages$'$sep$, $endfor$],
               },
               $if(tex-macros)$
               macros: {
@@ -453,8 +453,8 @@ $else$
           mathjax: '$mathjax-url$',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
-            inlineMath: [['$','$'], ['\\(','\\)']],
-            displayMath: [['$$','$$'],['\\[','\\]']],
+            inlineMath: [['$$','$$'], ['\\(','\\)']],
+            displayMath: [['$$$$','$$$$'],['\\[','\\]']],
             balanceBraces: true,
             processEscapes: true,
             processRefs: true,
@@ -465,7 +465,7 @@ $else$
             processClass: 'tex2jax_process'
           },
         },
-$endif
+$endif$
 $endif$
 $if(plugin-chalkboard)$
   customcontrols: {
@@ -486,13 +486,13 @@ $endif$
 $if(plugin-chalkboard)$
           RevealChalkboard,
           RevealCustomControls,
-$endif
+$endif$
 $if(mathjax)$
 $if(mathjax4)$
           RevealMath.Mathjax4,
-$elsif(mathjax3)$
+$elseif(mathjax3)$
           RevealMath.Mathjax3,
-$elsif(mathjax2)$
+$elseif(mathjax2)$
           RevealMath.Mathjax2,
 $else$
           RevealMath,
@@ -514,7 +514,7 @@ $endif$
       });
     </script>
   <script>
-    ${ (qr-box.js) }
+    ${ qr-box.js() }
   </script>
   $for(include-after)$
   $include-after$

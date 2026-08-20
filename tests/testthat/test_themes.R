@@ -1,28 +1,30 @@
 
 context("Themes")
 
-test_theme <- function(theme) {
+test_theme <- function(theme, rjs_ver = 3) {
   new_themes <- c("black-contrast", "dracula", "white-contrast")
   if (theme %in% new_themes) {
     return(NULL)
   }
   if(identical(theme, "custom"))
     return(NULL)
-  test_that(paste(theme, "theme"), {
+  test_that(stringr::str_c(theme, "theme, version", rjs_ver,
+                           sep = " "), {
     # don't run on cran because pandoc is required
     skip_on_cran()
 
     # work in a temp directory
     tmpdir <- tempdir(check = TRUE)
-    tstdir <- tempfile("revealjg-check", tmpdir)
+    tstdir <- tempfile("revealjmg-check", tmpdir)
     dir.create(tstdir)
 
     # create a draft of a presentation
     testdoc <- file.path(tstdir, "testdoc.Rmd")
     rmd_file <- rmarkdown::draft(
       testdoc,
-      system.file("rmarkdown", "templates", "revealjs_presentation",
-                  package = "revealjg"),
+      system.file("rmarkdown", stringr::str_c("revealjs-", rjs_ver),
+                  "templates", "revealjs_presentation",
+                  package = "revealjmg"),
       create_dir = FALSE,
       edit = FALSE
       )
@@ -46,5 +48,7 @@ test_theme <- function(theme) {
 
 # test all themes
 if (rmarkdown::pandoc_available()) {
-  sapply(revealjg:::revealjs_themes(), test_theme)
+  sapply(c(3, 6), function(v) {
+    sapply(revealjmg:::revealjs_themes(), test_theme, rjs_ver = v)
+  })
 }

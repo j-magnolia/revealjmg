@@ -1,7 +1,7 @@
 R Markdown Format for reveal.js Presentations
 ================
 
-- [revealjg](#revealjg)
+- [revealjmg](#revealjmg)
   - [Overview](#overview)
   - [Rendering](#rendering)
   - [Display Modes](#display-modes)
@@ -21,17 +21,17 @@ R Markdown Format for reveal.js Presentations
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# revealjg
+# revealjmg
 
 <!-- badges: start -->
 
 ![GitHub R package
-version](https://img.shields.io/github/r-package/v/jonathan-g/revealjg)
+version](https://img.shields.io/github/r-package/v/j-magnolia/revealjmg)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![R-CMD-check](https://github.com/jonathan-g/revealjg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jonathan-g/revealjg/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/j-magnolia/revealjmg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/j-magnolia/revealjmg/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -44,7 +44,7 @@ You can use this format in R Markdown documents by installing this
 package as follows:
 
 ``` r
-remotes::installgithub("jonathan-g/revealjg")
+remotes::installgithub("j-magnolia/revealjmg")
 ```
 
 To create a [reveal.js](http://lab.hakim.se/reveal-js/#/) presentation
@@ -58,7 +58,7 @@ For example here’s a simple slide show:
     title: "Habits"
     author: John Doe
     date: March 22, 2005
-    output: revealjg::revealjs_presentation
+    output: revealjmg::revealjs_presentation
     ---
 
     # In the morning
@@ -145,7 +145,7 @@ You can render bullets incrementally by adding the `incremental` option:
 
     ---
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         incremental: true
     ---
 
@@ -181,7 +181,7 @@ For example:
 
     ---
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         theme: sky
         highlight: pygments
         center: true
@@ -204,7 +204,7 @@ For example:
 
     ---
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         transition: fade
     ---
 
@@ -274,7 +274,7 @@ can specify any of these options using `reveal_options`, for example:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         self_contained: false
         reveal_options:
           slideNumber: true
@@ -304,7 +304,7 @@ For example:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         fig_width: 7
         fig_height: 6
         fig_caption: true
@@ -331,7 +331,7 @@ For example, to use a local copy of MathJax:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         mathjax: local
         self_contained: false
     ---
@@ -341,7 +341,7 @@ To use a self-hosted copy of MathJax:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
     ---
 
@@ -350,7 +350,7 @@ To exclude MathJax entirely:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         mathjax: null
     ---
 
@@ -366,7 +366,7 @@ rather keep dependencies in external files you can specify
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         self_contained: false
     ---
 
@@ -386,7 +386,7 @@ this, for example:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         self_contained: false
         lib_dir: libs
     ---
@@ -394,17 +394,17 @@ this, for example:
 ## Reveal Version
 
 `Reveal.js` underwent a serious refactoring between major versions 4 and
-5, so `revealjg` includes an option of specifying the `reveal.js`
+5, so `revealjmg` includes an option of specifying the `reveal.js`
 version to use. This affects which html template pandoc uses to render
 the slides and it affects the directory structure for finding `.css` and
 `.js` files in the `reveal.js` directory.
 
-By default, `revealjg` uses `reveal.js` version 5.2.1.
+By default, `revealjmg` uses `reveal.js` version 5.2.1.
 
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         reveal_version: "5.2.1"
         self_contained: false
         lib_dir: libs
@@ -463,7 +463,7 @@ you use the `includes` option as follows:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         includes:
           in_header: header.html
           before_body: doc_prefix.html
@@ -479,7 +479,7 @@ custom `pandoc_args`. For example:
     ---
     title: "Habits"
     output:
-      revealjg::revealjs_presentation:
+      revealjmg::revealjs_presentation:
         pandoc_args: [
           "--title-prefix", "Foo",
           "--id-prefix", "Bar"
@@ -500,7 +500,7 @@ object are used in this file. For example:
 **\_output.yaml**
 
 ``` yaml
-revealjg::revealjs_presentation:
+revealjmg::revealjs_presentation:
   theme: sky
   transition: fade
   highlight: pygments

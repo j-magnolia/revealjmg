@@ -1,7 +1,7 @@
 ---
 title: "Untitled"
 output: 
-  revealjg::revealjs_presentation:
+  revealjmg::revealjs_presentation:
     self_contained: false
     reveal_plugins: ["search", "zoom", "notes", "chalkboard", "menu"]
     reveal_options:

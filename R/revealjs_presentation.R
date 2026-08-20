@@ -60,7 +60,8 @@ globalVariables(c(".", "extension", "value"))
 #'   Markdown HTML output formatter [rmarkdown::html_document_base()].
 #' @param custom_plugins Add custom plugins to the list of supported plugins.
 #' @param no_postprocess Omit the post-processing step.
-#' @param ... Ignored
+#' @param ... Extra arguments, passed to the child presentation
+#'   generators.
 #'
 #' @return R Markdown output format to pass to \code{\link[rmarkdown]{render}}
 #'
@@ -72,13 +73,13 @@ globalVariables(c(".", "extension", "value"))
 #' headers building vertically.
 #'
 #' For additional documentation on using revealjs presentations see
-#' \href{https://github.com/jonathan-g/revealjg}{https://github.com/jonathan-g/revealjg}.
+#' \href{https://github.com/j-magnolia/revealjmg}{https://github.com/j-magnolia/revealjmg}.
 #'
 #' @examples
 #' \dontrun{
 #'
 #' library(rmarkdown)
-#' library(revealjg)
+#' library(revealjmg)
 #'
 #' # simple invocation
 #' render("pres.Rmd", revealjs_presentation())
@@ -117,7 +118,6 @@ revealjs_presentation <- function(incremental = FALSE,
                                   controls = FALSE,
                                   highlight = "default",
                                   mathjax = "default",
-                                  mathjax_version = 4,
                                   mathjax_scale = NULL,
                                   tex_extensions = NULL,
                                   tex_defs = NULL,
@@ -133,7 +133,7 @@ revealjs_presentation <- function(incremental = FALSE,
                                   no_postprocess = FALSE,
                                   ...) {
 
-  args <- as.list(match.call(expand.dots = TRUE))
+  args <- c(as.list(environment()), list(...))
 
   # Reveal version: layout of files changed a lot between versions
   # 4 and 6.
@@ -147,5 +147,11 @@ revealjs_presentation <- function(incremental = FALSE,
     doc_fn <- revealjs_3_presentation
   }
 
-  exec(doc_fn, !!!args)
+  # message("args = ",
+  #         purrr::imap(args,
+  #                     ~stringr::str_c(.y, ": ",
+  #                                     ifelse(is.null(.x), "NULL", .x),
+  #                                     ", "))
+  #         )
+  rlang::exec(doc_fn, !!!args)
 }

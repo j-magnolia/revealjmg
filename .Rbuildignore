@@ -1,6 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 README.*
+^LICENSE\.R?md$
+^LICENCE$
+^cran-comments\.md$
 examples/
 ^inst/old_rmarkdown$
 ^(.*/)*node_modules$
@@ -9,7 +12,8 @@ examples/
 ^(.*/)*\.gitkeep$
 ^(.*/)*\.travis.yml
 ^([a-zA-Z0-9._-]+)\.py$
-^inst/reveal\.js[0-9._\-]*/[^/]*\.json$
+^inst/reveal\.js[0-9._\-]*/node_modules/.*$
+^inst/reveal\.js[0-9._\-]*/package-lock\.json$
 ^inst/reveal\.js[0-9._\-]*/[^/]*\.js$
 ^inst/reveal\.js[0-9._\-]*/[^/]*\.html$
 ^inst/reveal\.js[0-9._\-]*/[^/]*\.md$
@@ -25,6 +29,7 @@ examples/
 ^\.github$
 ^\.gitlab-ci.yml$
 ^_pkgdown\.yml$
+^.*\.code-workspace$
 ^docs$
 ^pkgdown$
 ^README\.Rmd$
