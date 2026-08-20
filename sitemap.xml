@@ -1,11 +1,14 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>https://jonathan-g.github.io/revealjg/404.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/LICENSE-text.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/authors.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/index.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/news/index.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/reference/index.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/reference/revealjg_postprocessor.html</loc></url>
-<url><loc>https://jonathan-g.github.io/revealjg/reference/revealjs_presentation.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/404.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/LICENSE-text.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/LICENSE.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/authors.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/index.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/news/index.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/reference/index.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/reference/revealjmg_postprocessor.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/reference/revealjs_3_presentation.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/reference/revealjs_6_presentation.html</loc></url>
+<url><loc>https://j-magnolia.github.io/revealjmg/reference/revealjs_presentation.html</loc></url>
 </urlset>
 

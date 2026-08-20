@@ -5,7 +5,7 @@ Format for converting from R Markdown to a reveal.js presentation.
 ## Usage
 
 ``` r
-revealjs_presentation(
+revealjs_3_presentation(
   incremental = FALSE,
   center = FALSE,
   width = NULL,
@@ -28,7 +28,7 @@ revealjs_presentation(
   custom_background_transition = NULL,
   reveal_options = NULL,
   reveal_plugins = NULL,
-  reveal_version = "6.0.1",
+  reveal_version = "3.8.0",
   reveal_location = "default",
   resource_location = "default",
   controls = FALSE,
@@ -78,11 +78,10 @@ revealjs_presentation(
 
 - slide_level:
 
-  Level of heading to denote individual slides. If `slide_level` is 2
-  (the default), a two-dimensional layout will be produced, with level 1
-  headers building horizontally and level 2 headers building vertically.
-  It is not recommended that you use deeper nesting of section levels
-  with reveal.js.
+  The heading level which defines individual slides. By default this is
+  the highest header level in the hierarchy that is followed immediately
+  by content, and not another header, somewhere in the document. This
+  default can be overridden by specifying an explicit `slide_level`.
 
 - fig_width:
 
@@ -117,9 +116,7 @@ revealjs_presentation(
 
 - theme:
 
-  Visual theme ("simple", "sky", "beige", "moon", "night", "solarized",
-  "league", "serif", "blood", "dracula", "black", "black-contrast",
-  "white", or "white-contrast").
+  Beamer theme (e.g. "AnnArbor").
 
 - custom_theme:
 
@@ -220,9 +217,9 @@ revealjs_presentation(
   Pandoc template to use for rendering. Pass "default" to use the
   rmarkdown package default template; pass `NULL` to use pandoc's
   built-in template; pass a path to use a custom template that you've
-  created. Note that if you don't use the "default" template then some
-  features of `revealjs_presentation` won't be available (see the
-  Templates section below for more details).
+  created. See the documentation on [pandoc online
+  documentation](https://pandoc.org/MANUAL.html) for details on creating
+  custom templates.
 
 - css:
 
@@ -243,7 +240,10 @@ revealjs_presentation(
 
 - md_extensions:
 
-  Pandoc markdown extensions
+  Markdown extensions to be added or removed from the default definition
+  of R Markdown. See the
+  [`rmarkdown_format`](https://pkgs.rstudio.com/rmarkdown/reference/rmarkdown_format.html)
+  for additional details.
 
 - keep_md:
 
@@ -261,9 +261,13 @@ revealjs_presentation(
 
 - extra_dependencies:
 
-  Additional function arguments to pass to the base R Markdown HTML
-  output formatter
-  [`rmarkdown::html_document_base()`](https://pkgs.rstudio.com/rmarkdown/reference/html_document_base.html).
+  A LaTeX dependency
+  [`latex_dependency()`](https://pkgs.rstudio.com/rmarkdown/reference/latex_dependency.html),
+  a list of LaTeX dependencies, a character vector of LaTeX package
+  names (e.g. `c("framed", "hyperref")`), or a named list of LaTeX
+  package options with the names being package names (e.g.
+  `list(hyperef = c("unicode=true", "breaklinks=true"), lmodern = NULL)`).
+  It can be used to add custom LaTeX packages to the .tex header.
 
 - custom_plugins:
 
@@ -275,7 +279,7 @@ revealjs_presentation(
 
 - ...:
 
-  Extra arguments, passed to the child presentation generators.
+  Ignored
 
 ## Value
 

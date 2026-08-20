@@ -5,15 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>RMarkdown format for `reveal.js` presentations • revealjg</title>
+<title>RMarkdown format for `reveal.js` presentations • revealjmg</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="RMarkdown format for `reveal.js` presentations">
 <meta name="description" content="R Markdown format for reveal.js presentations, a framework for easily creating beautiful presentations using HTML.">
 <meta property="og:description" content="R Markdown format for reveal.js presentations, a framework for easily creating beautiful presentations using HTML.">
-<meta property="og:image" content="https://jonathan-g.github.io/revealjg/reference/figures/logo.png">
+<meta property="og:image" content="https://j-magnolia.github.io/revealjmg/reference/figures/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@jg_environ">
 <meta name="twitter:site" content="@jg_environ">
@@ -24,9 +24,9 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">revealjg</a>
+    <a class="navbar-brand me-2" href="index.html">revealjmg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/jonathan-g/revealjg/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/j-magnolia/revealjmg/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -55,7 +55,7 @@
 </h1></div>
 <ul>
 <li>
-<a href="#revealjg">revealjg</a>
+<a href="#revealjmg">revealjmg</a>
 <ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#rendering">Rendering</a></li>
@@ -79,7 +79,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 </div>
 <div class="section level1">
-<h1 id="revealjg">revealjg<a class="anchor" aria-label="anchor" href="#revealjg"></a>
+<h1 id="revealjmg">revealjmg<a class="anchor" aria-label="anchor" href="#revealjmg"></a>
 </h1>
 <!-- badges: start -->
 
@@ -89,13 +89,13 @@
 <p>This repository provides an <a href="http://rmarkdown.rstudio.com" class="external-link">R Markdown</a> custom format for <a href="http://lab.hakim.se/reveal-js/#/" class="external-link">reveal.js</a> HTML presentations.</p>
 <p>You can use this format in R Markdown documents by installing this package as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">installgithub</span><span class="op">(</span><span class="st">"jonathan-g/revealjg"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">installgithub</span><span class="op">(</span><span class="st">"j-magnolia/revealjmg"</span><span class="op">)</span></span></code></pre></div>
 <p>To create a <a href="http://lab.hakim.se/reveal-js/#/" class="external-link">reveal.js</a> presentation from R Markdown you specify the <code>revealjs_presentation</code> output format in the front-matter of your document. You can create a slide show broken up into sections by using the <code>#</code> and <code>##</code> heading tags (you can also create a new slide without a header using a horizontal rule (<code>----</code>). For example here’s a simple slide show:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>author<span class="sc">:</span> John Doe</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>date<span class="sc">:</span> March <span class="dv">22</span>, <span class="dv">2005</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>output<span class="sc">:</span> revealjg<span class="sc">::</span>revealjs_presentation</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>output<span class="sc">:</span> revealjmg<span class="sc">::</span>revealjs_presentation</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co"># In the morning</span></span>
@@ -168,7 +168,7 @@
 <p>You can render bullets incrementally by adding the <code>incremental</code> option:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    incremental<span class="sc">:</span> true</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 <p>If you want to render bullets incrementally for some slides but not others you can use this syntax:</p>
@@ -188,7 +188,7 @@
 <p>For example:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    theme<span class="sc">:</span> sky</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    highlight<span class="sc">:</span> pygments</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    center<span class="sc">:</span> true</span>
@@ -205,7 +205,7 @@
 <p>For example:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    transition<span class="sc">:</span> fade</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 <p>You can override the global transition for a specific slide by using the data-transition attribute, for example:</p>
@@ -250,7 +250,7 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    self_contained<span class="sc">:</span> false</span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    reveal_options<span class="sc">:</span></span>
 <span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>      slideNumber<span class="sc">:</span> true</span>
@@ -271,7 +271,7 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    fig_width<span class="sc">:</span> <span class="dv">7</span></span>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    fig_height<span class="sc">:</span> <span class="dv">6</span></span>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    fig_caption<span class="sc">:</span> true</span>
@@ -291,7 +291,7 @@
 <div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    mathjax<span class="sc">:</span> local</span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>    self_contained<span class="sc">:</span> false</span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
@@ -299,14 +299,14 @@
 <div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    mathjax<span class="sc">:</span> <span class="st">"http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span></span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 <p>To exclude MathJax entirely:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    mathjax<span class="sc">:</span> null</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 </div>
@@ -317,7 +317,7 @@
 <div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    self_contained<span class="sc">:</span> false</span>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
 <p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it’s size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
@@ -325,7 +325,7 @@
 <div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    self_contained<span class="sc">:</span> false</span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    lib_dir<span class="sc">:</span> libs</span>
 <span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
@@ -333,12 +333,12 @@
 <div class="section level2">
 <h2 id="reveal-version">Reveal Version<a class="anchor" aria-label="anchor" href="#reveal-version"></a>
 </h2>
-<p><code>Reveal.js</code> underwent a serious refactoring between major versions 4 and 5, so <code>revealjg</code> includes an option of specifying the <code>reveal.js</code> version to use. This affects which html template pandoc uses to render the slides and it affects the directory structure for finding <code>.css</code> and <code>.js</code> files in the <code>reveal.js</code> directory.</p>
-<p>By default, <code>revealjg</code> uses <code>reveal.js</code> version 5.2.1.</p>
+<p><code>Reveal.js</code> underwent a serious refactoring between major versions 4 and 5, so <code>revealjmg</code> includes an option of specifying the <code>reveal.js</code> version to use. This affects which html template pandoc uses to render the slides and it affects the directory structure for finding <code>.css</code> and <code>.js</code> files in the <code>reveal.js</code> directory.</p>
+<p>By default, <code>revealjmg</code> uses <code>reveal.js</code> version 5.2.1.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>    reveal_version<span class="sc">:</span> <span class="st">"5.2.1"</span></span>
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>    self_contained<span class="sc">:</span> false</span>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>    lib_dir<span class="sc">:</span> libs</span>
@@ -353,24 +353,24 @@
 <col width="50%">
 <col width="50%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Plugin</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><a href="https://github.com/hakimel/reveal.js/#speaker-notes" class="external-link">notes</a></td>
 <td>Present per-slide notes in a separate browser window.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><a href="http://lab.hakim.se/zoom-js/" class="external-link">zoom</a></td>
 <td>Zoom in and out of selected content with Alt+Click.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><a href="https://github.com/hakimel/reveal.js/blob/master/plugin/search/search.js" class="external-link">search</a></td>
 <td>Find a text string anywhere in the slides and show the next occurrence to the user.</td>
 </tr>
-<tr class="even">
+<tr>
 <td><a href="https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard" class="external-link">chalkboard</a></td>
 <td>Include handwritten notes within a presentation.</td>
 </tr>
@@ -409,7 +409,7 @@
 <div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    includes<span class="sc">:</span></span>
 <span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>      in_header<span class="sc">:</span> header.html</span>
 <span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>      before_body<span class="sc">:</span> doc_prefix.html</span>
@@ -423,7 +423,7 @@
 <div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="sc">---</span></span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Habits"</span></span>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>output<span class="sc">:</span></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  revealjg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>  revealjmg<span class="sc">::</span>revealjs_presentation<span class="sc">:</span></span>
 <span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>    pandoc_args<span class="sc">:</span> [</span>
 <span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>      <span class="st">"--title-prefix"</span>, <span class="st">"Foo"</span>,</span>
 <span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>      <span class="st">"--id-prefix"</span>, <span class="st">"Bar"</span></span>
@@ -437,7 +437,7 @@
 </h2>
 <p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:</p>
 <p><strong>_output.yaml</strong></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="at">revealjg:</span><span class="fu">:revealjs_presentation</span><span class="kw">:</span></span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="at">revealjmg:</span><span class="fu">:revealjs_presentation</span><span class="kw">:</span></span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="at">  </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> sky</span></span>
 <span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="at">  </span><span class="fu">transition</span><span class="kw">:</span><span class="at"> fade</span></span>
 <span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="at">  </span><span class="fu">highlight</span><span class="kw">:</span><span class="at"> pygments</span></span></code></pre></div>
@@ -448,17 +448,16 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/jonathan-g/revealjg/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/jonathan-g/revealjg/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/j-magnolia/revealjmg/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/j-magnolia/revealjmg/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -466,7 +465,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing revealjg</a></li>
+<li><a href="authors.html#citation">Citing revealjmg</a></li>
 </ul>
 </div>
 
@@ -475,7 +474,7 @@
 <ul class="list-unstyled">
 <li>Hakim El Hattab <br><small class="roles"> Author, copyright holder </small>   </li>
 <li>JJ Allaire <br><small class="roles"> Author </small>   </li>
-<li>Jonathan Gilligan <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1375-6686" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>J. Magnolia Gilligan <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1375-6686" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -487,11 +486,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Hakim El Hattab, JJ Allaire, Jonathan Gilligan.</p>
+  <p>Developed by Hakim El Hattab, JJ Allaire, J. Magnolia Gilligan.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

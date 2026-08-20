@@ -2,7 +2,11 @@
 
 ## All functions
 
-- [`revealjg_postprocessor()`](https://jonathan-g.github.io/revealjg/reference/revealjg_postprocessor.md)
+- [`revealjmg_postprocessor()`](https://j-magnolia.github.io/revealjmg/reference/revealjmg_postprocessor.md)
   : Postprocess a reveal.js HTML file
-- [`revealjs_presentation()`](https://jonathan-g.github.io/revealjg/reference/revealjs_presentation.md)
+- [`revealjs_3_presentation()`](https://j-magnolia.github.io/revealjmg/reference/revealjs_3_presentation.md)
+  : Convert to a reveal.js presentation
+- [`revealjs_6_presentation()`](https://j-magnolia.github.io/revealjmg/reference/revealjs_6_presentation.md)
+  : Convert to a reveal.js presentation
+- [`revealjs_presentation()`](https://j-magnolia.github.io/revealjmg/reference/revealjs_presentation.md)
   : Convert to a reveal.js presentation
