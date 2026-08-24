@@ -30,7 +30,8 @@ test:
     - R CMD check "${PKG_FILE_NAME}" --no-manual
   artifacts:
     paths:
-      - revealjmg.Rcheck/00*
+      - revealjmg.Rcheck/00*.log
+      - revealjmg.Rcheck/00*.out
     expire_in: 24 hours
     when: on_failure
 
