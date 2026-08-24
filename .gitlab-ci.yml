@@ -29,7 +29,7 @@ test:
   artifacts:
     paths:
       - builds
-      expire_in: 24 hours
+    expire_in: 24 hours
 
 pages:
   stage: document
