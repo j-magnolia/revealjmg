@@ -35,6 +35,7 @@ revealjs_6_presentation(
   highlight = "default",
   mathjax = "default",
   mathjax_version = 4,
+  mathjax_font = NULL,
   mathjax_scale = NULL,
   tex_extensions = NULL,
   tex_defs = NULL,
@@ -204,6 +205,10 @@ revealjs_6_presentation(
 - mathjax_version:
 
   MathJax version (2, 3, or 4)
+
+- mathjax_font:
+
+  MathJax alternate font.
 
 - mathjax_scale:
 
