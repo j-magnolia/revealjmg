@@ -16,14 +16,14 @@ stages:
 
 before_script:
   - mkdir -p $R_LIBS_USER
-  - R -e 'devtools::install_deps(dep = T)'
+  - R -e 'pak::local_install_dep(dependencies = TRUE)'
 
 test:
   stage: test
   script:
     # - R -e "install.packages(c('janitor', 'R.utils'))"
     - R -e "sessionInfo()"
-    - R CMD build . --build-vignettes --no-manual
+    - R CMD build . --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-manual
 
