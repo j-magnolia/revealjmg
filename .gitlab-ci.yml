@@ -16,7 +16,7 @@ stages:
 
 before_script:
   - mkdir -p $R_LIBS_USER
-  - R -e 'pak::local_install_dep(dependencies = TRUE)'
+  - R -e 'pak::local_install_deps(dependencies = TRUE)'
 
 test:
   stage: test
