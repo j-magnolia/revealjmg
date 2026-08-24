@@ -138,6 +138,13 @@ revealjs_presentation <- function(incremental = FALSE,
   # Reveal version: layout of files changed a lot between versions
   # 4 and 6.
 
+  message("revealjmg::revealjs_presentation: reveal version ",
+          reveal_version)
+
+  if (reveal_version == "default") {
+    reveal_version <- "6.0.1"
+  }
+
   reveal_new_version <- semver::parse_version(reveal_version) >=
     semver::parse_version("6.0.0")
 
@@ -147,11 +154,12 @@ revealjs_presentation <- function(incremental = FALSE,
     doc_fn <- revealjs_3_presentation
   }
 
-  # message("args = ",
-  #         purrr::imap(args,
-  #                     ~stringr::str_c(.y, ": ",
-  #                                     ifelse(is.null(.x), "NULL", .x),
-  #                                     ", "))
-  #         )
+  message("revealjmg::revealjs_presentation: args = [",
+          purrr::imap(args,
+                      ~stringr::str_c(.y, ": ",
+                                      ifelse(is.null(.x), "NULL", .x))
+                      ) |> stringr::str_c(collapse = ",\n  "),
+          "  ]"
+          )
   rlang::exec(doc_fn, !!!args)
 }

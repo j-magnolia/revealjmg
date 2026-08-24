@@ -81,6 +81,9 @@ revealjs_3_presentation <- function(incremental = FALSE,
                                     no_postprocess = FALSE,
                                     ...) {
 
+  message("revealjmg::revealjs_3_presentation: version: ",
+          reveal_version)
+
   # Reveal version: layout of files changed a lot between versions
   # 4 and 6.
 
@@ -349,9 +352,10 @@ revealjs_3_presentation <- function(incremental = FALSE,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
-                            output_dir) {
+  pre_processor_3 <- function(metadata, input_file, runtime, knit_meta,
+                              files_dir, output_dir) {
 
+    message("Starting revealjs 3 preprocessor...")
     # we don't work with runtime shiny
     if (identical(runtime, "shiny")) {
       stop("revealjs_presentation is not compatible with runtime 'shiny'",
@@ -408,6 +412,11 @@ revealjs_3_presentation <- function(incremental = FALSE,
     message("setting highlight args in pre-processor")
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
 
+    message("Done preprocessing: args = [",
+            ~stringr::str_c(args, collapse = "\n  "),
+            "\n  ]")
+    message("Done preprocessing. Returning")
+
     # return additional args
     args
   }
@@ -426,7 +435,7 @@ revealjs_3_presentation <- function(incremental = FALSE,
                             args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
-    pre_processor = pre_processor,
+    pre_processor = pre_processor_3,
     post_processor = postprocessor,
     base_format = html_document_base(smart = FALSE, lib_dir = lib_dir,
                                      self_contained = self_contained,

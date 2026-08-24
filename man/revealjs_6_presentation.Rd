@@ -34,6 +34,7 @@ revealjs_6_presentation(
   highlight = "default",
   mathjax = "default",
   mathjax_version = 4,
+  mathjax_font = NULL,
   mathjax_scale = NULL,
   tex_extensions = NULL,
   tex_defs = NULL,
@@ -148,6 +149,8 @@ copied into the output directory). You can pass an alternate URL or pass
 \code{NULL} to exclude MathJax entirely.}
 
 \item{mathjax_version}{MathJax version (2, 3, or 4)}
+
+\item{mathjax_font}{MathJax alternate font.}
 
 \item{mathjax_scale}{Scale (in percent) for MathJax. Default = 100}
 

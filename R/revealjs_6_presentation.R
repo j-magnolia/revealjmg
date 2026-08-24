@@ -10,6 +10,7 @@ globalVariables(c(".", "extension", "value"))
 #' @inheritParams revealjs_presentation
 #'
 #' @param mathjax_version MathJax version (2, 3, or 4)
+#' @param mathjax_font MathJax alternate font.
 #' @param ... Extra options (none at the moment)
 #'
 #' @return R Markdown output format to pass to \code{\link[rmarkdown]{render}}
@@ -68,6 +69,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
                                     highlight = "default",
                                     mathjax = "default",
                                     mathjax_version = 4,
+                                    mathjax_font = NULL,
                                     mathjax_scale = NULL,
                                     tex_extensions = NULL,
                                     tex_defs = NULL,
@@ -83,6 +85,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
                                     no_postprocess = FALSE,
                                   ...) {
 
+  message("revealjmg::revealjs_6_presentation: version: ",
+          reveal_version)
 
   # Reveal version: layout of files changed a lot between versions
   # 4 and 6.
@@ -187,7 +191,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
   args <- c(args, "--slide-level", as.character(slide_level))
 
   # theme
-  theme <- match.arg(theme, revealjs_themes())
+  theme <- match.arg(theme, revealjs_6_themes())
   theme_dark <- FALSE
   if (identical(theme, "custom")) {
     if (is.null(custom_theme))
@@ -216,7 +220,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
 
   # transition
-  transition <- match.arg(transition, revealjs_transitions())
+  transition <- match.arg(transition, revealjs_6_transitions())
   if (identical(transition, "custom")) {
     if (is.null(custom_transition)) {
       stop("Missing custom_transition in YAML header")
@@ -228,7 +232,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
   args <- c(args, pandoc_variable_arg("transition", transition))
 
   # background_transition
-  background_transition <- match.arg(background_transition, revealjs_transitions())
+  background_transition <- match.arg(background_transition, revealjs_6_transitions())
   if (identical(background_transition, 'custom')) {
     if (is.null(custom_background_transition)) {
       stop("Missing custom_background_transition in YAML header")
@@ -243,6 +247,23 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   # use hash
   args <- c(args, pandoc_variable_arg("hash", "true"))
+
+  # mathjax-version
+  if (! is.null(mathjax_version)) {
+    message("Mathjax version = ", mathjax_version)
+    mjv <- as.integer(floor(as.numeric(mathjax_version)))
+    if (mjv == 4L) {
+      args <- c(args, pandoc_variable_arg("mathjax-version", mjv),
+                pandoc_variable_arg("mathjax4", TRUE))
+      if (! is.null(mathjax_font) && mathjax_font != "default") {
+        args <- c(args, pandoc_variable_arg("mathjax-font",
+                                            mathjax_font))
+        }
+    } else if (mjv == 3L) {
+      args <- c(args, pandoc_variable_arg("mathjax-version", mjv),
+                pandoc_variable_arg("mathjax3", TRUE))
+    }
+  }
 
   # mathjax-scale
   if (! is.null(mathjax_scale)) {
@@ -306,14 +327,14 @@ revealjs_6_presentation <- function(incremental = FALSE,
   # TeX extensions for MathJax
   if (! is.null(tex_extensions)) {
     args <- c(args, sapply(tex_extensions, function(ext) {
-      pandoc_variable_arg('tex-extensions', ext)
+      pandoc_variable_arg('mathjax-packages', ext)
     }))
   }
 
   # TeX macro definitions for MathJax
   if (! is.null(tex_defs)) {
     args <- c(args, sapply(tex_defs, function(x) {
-      pandoc_variable_arg('tex-defs',
+      pandoc_variable_arg('tex-macros',
                           gsub('\\','\\\\',
                                paste0(x$name, ': "', x$def, '"'),
                                fixed=TRUE))
@@ -356,9 +377,10 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
-                            output_dir) {
+  pre_processor_6 <- function(metadata, input_file, runtime, knit_meta,
+                              files_dir, output_dir) {
 
+    message("Starting revealjs 6 preprocessor...")
     # we don't work with runtime shiny
     if (identical(runtime, "shiny")) {
       stop("revealjs_presentation is not compatible with runtime 'shiny'",
@@ -422,6 +444,11 @@ revealjs_6_presentation <- function(incremental = FALSE,
     args <- c(args, pandoc_highlight_args(highlight,
                                           default = "pygments"))
 
+    message("Done preprocessing: args = [",
+            ~stringr::str_c(args, collapse = "\n  "),
+            "\n  ]")
+
+    message("Done preprocessing. Returning")
     # return additional args
     args
   }
@@ -432,15 +459,19 @@ revealjs_6_presentation <- function(incremental = FALSE,
     postprocessor = revealjmg_postprocessor
   }
 
+  message("Built arguments: building output format for revealjs 6")
+  message("  pandoc args = [",
+          ~stringr::str_c(args, collapse = "\n  "),
+          "\n  ]")
   # return format
-  output_format(
+  of <- output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md),
     pandoc = pandoc_options(to = "revealjs",
                             from = rmarkdown_format(markdown_extensions),
                             args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
-    pre_processor = pre_processor,
+    pre_processor = pre_processor_6,
     post_processor = postprocessor,
     base_format = html_document_base(smart = FALSE, lib_dir = lib_dir,
                                      self_contained = self_contained,
@@ -448,6 +479,10 @@ revealjs_6_presentation <- function(incremental = FALSE,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
                                      ...))
+
+  message("Done generating output format.")
+
+  invisible(of)
 }
 
 
@@ -465,7 +500,7 @@ revealjs_6_themes <- function() {
     "simple",
     "sky",
     "solarized",
-    "solarized_jmg",
+    "solarized-jmg",
     "white",
     "white-contrast",
     "custom")

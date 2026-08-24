@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- JMG Reveal.js Template -->
+<!-- JMG Reveal.js 6 Template -->
 <html$if(lang)$ lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
 <head>
   <meta charset="utf-8" />
@@ -26,7 +26,7 @@ $endif$
     $styles.html()$
   </style>
 $if(local-theme)$
-<!-- theme = $local-theme$ -->
+<!-- local theme = $local-theme$ -->
 <link rel="stylesheet" href="$local-asset-url$/theme/$local-theme$.css" id="theme">
 $if(theme-dark)$
 <style type="text/css">
@@ -36,7 +36,7 @@ $if(theme-dark)$
 </style>
 $endif$
 $else$$if(theme)$
-<!-- theme = $theme$ -->
+<!-- standard theme = $theme$ -->
   <link rel="stylesheet" href="$revealjs-url$/theme/$theme$.css" id="theme">
 $else$
   <link rel="stylesheet" href="$revealjs-url$/theme/solarized.css" id="theme">
@@ -169,7 +169,7 @@ $endif$
         slideNumber: $slideNumber$,
 
         // 'all', 'print', or 'speaker'
-        showSlideNumber: '$showSlideNumber$',
+        showSlideNumber: $showSlideNumber$,
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
@@ -489,11 +489,11 @@ $if(plugin-chalkboard)$
 $endif$
 $if(mathjax)$
 $if(mathjax4)$
-          RevealMath.Mathjax4,
+          RevealMath.MathJax4,
 $elseif(mathjax3)$
-          RevealMath.Mathjax3,
+          RevealMath.MathJax3,
 $elseif(mathjax2)$
-          RevealMath.Mathjax2,
+          RevealMath.MathJax2,
 $else$
           RevealMath,
 $endif$
@@ -513,9 +513,11 @@ $endif$
           ]
       });
     </script>
+  $if(qrimage)$
   <script>
     ${ qr-box.js() }
   </script>
+  $endif$
   $for(include-after)$
   $include-after$
   $endfor$
