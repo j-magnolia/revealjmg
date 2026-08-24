@@ -280,7 +280,7 @@ revealjs_presentation(
 ## Value
 
 R Markdown output format to pass to
-[`render`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
+[`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
 
 ## Details
 

@@ -14,7 +14,7 @@ revealjmg_postprocessor(metadata, input_file, output_file, clean, verbose)
 - metadata:
 
   YAML metadata passed by
-  [`rmarkdown::render`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
+  [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
 
 - input_file:
 

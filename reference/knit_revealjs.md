@@ -30,7 +30,8 @@ knit_revealjs(input, output_format = "revealjmg::revealjs_presentation", ...)
 
 ## Value
 
-See rmarkdown::render
+See
+[`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
 
 ## Details
 
