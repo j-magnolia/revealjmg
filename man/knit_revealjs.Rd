@@ -15,7 +15,7 @@ details.}
 \item{...}{Other arguments passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}.}
 }
 \value{
-See \link{rmarkdown::render}
+See \code{\link[rmarkdown:render]{rmarkdown::render()}}
 }
 \description{
 This function calls \code{\link[rmarkdown:render]{rmarkdown::render()}} from the RStudio

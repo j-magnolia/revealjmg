@@ -199,7 +199,7 @@ add custom LaTeX packages to the .tex header.}
 \item{...}{Extra options (none at the moment)}
 }
 \value{
-R Markdown output format to pass to \code{\link[rmarkdown]{render}}
+R Markdown output format to pass to \code{\link[rmarkdown:render]{rmarkdown::render()}}
 }
 \description{
 Format for converting from R Markdown to a reveal.js presentation.

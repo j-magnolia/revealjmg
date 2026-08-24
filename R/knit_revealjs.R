@@ -17,7 +17,7 @@
 #'   details.
 #' @param ... Other arguments passed to [rmarkdown::render()].
 #'
-#' @return See \link{rmarkdown::render}
+#' @return See [rmarkdown::render()]
 #' @seealso [rmarkdown::render()]
 #' @export
 #'

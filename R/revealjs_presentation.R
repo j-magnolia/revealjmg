@@ -63,7 +63,7 @@ globalVariables(c(".", "extension", "value"))
 #' @param ... Extra arguments, passed to the child presentation
 #'   generators.
 #'
-#' @return R Markdown output format to pass to \code{\link[rmarkdown]{render}}
+#' @return R Markdown output format to pass to [rmarkdown::render()]
 #'
 #' @details
 #'

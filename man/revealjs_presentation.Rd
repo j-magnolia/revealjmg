@@ -190,7 +190,7 @@ Markdown HTML output formatter \code{\link[rmarkdown:html_document_base]{rmarkdo
 generators.}
 }
 \value{
-R Markdown output format to pass to \code{\link[rmarkdown]{render}}
+R Markdown output format to pass to \code{\link[rmarkdown:render]{rmarkdown::render()}}
 }
 \description{
 Format for converting from R Markdown to a reveal.js presentation.

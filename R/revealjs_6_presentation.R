@@ -13,7 +13,7 @@ globalVariables(c(".", "extension", "value"))
 #' @param mathjax_font MathJax alternate font.
 #' @param ... Extra options (none at the moment)
 #'
-#' @return R Markdown output format to pass to \code{\link[rmarkdown]{render}}
+#' @return R Markdown output format to pass to [rmarkdown::render()]
 #'
 #' @details
 #'

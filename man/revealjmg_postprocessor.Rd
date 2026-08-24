@@ -7,7 +7,7 @@
 revealjmg_postprocessor(metadata, input_file, output_file, clean, verbose)
 }
 \arguments{
-\item{metadata}{YAML metadata passed by \code{rmarkdown::render}}
+\item{metadata}{YAML metadata passed by \code{\link[rmarkdown:render]{rmarkdown::render()}}}
 
 \item{input_file}{The RMarkdown source file}
 

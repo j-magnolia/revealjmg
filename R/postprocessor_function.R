@@ -20,7 +20,7 @@
 #' fragment in the list. You can also add classes to control what the fragments
 #' do when they're activated.
 #'
-#' @param metadata YAML metadata passed by \code{rmarkdown::render}
+#' @param metadata YAML metadata passed by [rmarkdown::render()]
 #' @param input_file The RMarkdown source file
 #' @param output_file The HTML file produced by Pandoc
 #' @param clean A logical value indicating whether to delete the intermediate
