@@ -139,12 +139,16 @@ revealjs_6_presentation <- function(incremental = FALSE,
   # function to lookup reveal resource
   reveal_resources <- function() {
     if(identical(resource_location, "default")) {
-      system.file(file.path("rmarkdown", resource_loc,
-                            "templates/revealjs_presentation/resources"),
-                            package = "revealjmg")
+      resloc <- system.file(
+        file.path("rmarkdown", resource_loc,
+                  "templates/revealjs_presentation/resources"),
+        package = "revealjmg"
+      )
     } else {
-      resource_location
+      resloc <- resource_location
     }
+    message("Resource location = ", resloc)
+    resloc
   }
 
   # base pandoc options for all reveal.js output
@@ -152,20 +156,28 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
 
   # template path and assets
+  default_template <- file.path(reveal_resources(), 'default.html')
   if (identical(template, "default")) {
-    default_template <- file.path(reveal_resources(),
-                                  'default.html')
-    args <- c(args, "--template", pandoc_path_arg(default_template))
+    message("Using default template")
+    t <- default_template
   } else {
-    if(!file.exists(template)) {
+    if(file.exists(template)) {
+      t <- template
+      message("Found local template ", t)
+    } else {
       t <-  file.path(reveal_resources(), template)
       if (! file.exists(t)) {
         t <- file.path(reveal_resources(), 'templates', template)
       }
-      if (file.exists(t)) template <- t
+      if (file.exists(t)) {
+        message("Found template in resource directory: ", t)
+      } else {
+        message("Can't find template, ", t)
+        t <- default_template
+      }
     }
-    args <- c(args, "--template",
-              pandoc_path_arg(template))
+    message("Using template ", t)
+    args <- c(args, "--template", pandoc_path_arg(t))
   }
 
   # incremental
@@ -276,8 +288,9 @@ revealjs_6_presentation <- function(incremental = FALSE,
     add_reveal_option <- function(option, value) {
       if (is.logical(value))
         value <- jsbool(value)
-      else if (is.character(value))
-        value <- paste0("'", value, "'")
+      else if (is.character(value)) {
+        # value <- paste0("'", value, "'")
+      }
       args <<- c(args, pandoc_variable_arg(option, value))
     }
 
