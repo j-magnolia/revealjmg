@@ -428,15 +428,25 @@ revealjs_6_presentation <- function(incremental = FALSE,
       message("rendering: self_contained = ", self_contained,
               ", OS = ", .Platform$OS.type)
       message("revealjs_path = ", revealjs_path,
-              ", custom_asset_path = ", custom_asset_path,
-              ", current directory = ", getwd(), ", output_dir = ",
+              ",\n  custom_asset_path = ", custom_asset_path,
+              ",\n  lib_dir = ", lib_dir,
+              ",\n  current directory = ", getwd(),
+              ",\n  output_dir = ",
               output_dir)
+      old_rjs_path <- revealjs_path
       revealjs_path <- relative_to(
         output_dir, render_supporting_files(revealjs_path, lib_dir))
-      custom_asset_path <- relative_to(output_dir, custom_asset_path)
+      if (custom_asset_path == old_rjs_path) {
+        custom_asset_path <- revealjs_path
+      } else {
+      custom_asset_path <- relative_to(
+        output_dir,
+        render_supporting_files(custom_asset_path, lib_dir))
+      }
       message("revealjs_path = ", revealjs_path,
-              ", custom_asset_path = ", custom_asset_path,
-              ", current directory = ", getwd(), ", output_dir = ",
+              ",\n  custom_asset_path = ", custom_asset_path,
+              ",\n  current directory = ", getwd(),
+              ",\n  output_dir = ",
               output_dir)
     }else  {
       revealjs_path <- pandoc_path_arg(revealjs_path)
