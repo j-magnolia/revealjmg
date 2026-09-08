@@ -1,5 +1,35 @@
 globalVariables(c(".", "extension", "value"))
 
+
+#' Append variable to pandoc variable list
+#'
+#' Appends a new value to a pandoc variable. Discards duplicate
+#' values and sorts the results. Handles the case where there is
+#' no previous value for that key.
+#'
+#' @param pvars A named list with keys and values. Values may be vectors
+#'   with length > 1.
+#' @param key The key (character).
+#' @param value The value (any type).
+#'
+#' @return An appended list of keys and values.
+#' @examples
+#' \dontrun{
+#' pandoc_vars <- list()
+#' pandoc_vars <- append_pandoc_var("width", 1920)
+#' }
+#'
+append_pandoc_var <- function(pvars, key, value) {
+  jsbool <- function(value) ifelse(value, "true", "false")
+
+  if(is.logical(value)) {
+    value <- jsbool(value)
+  }
+  pvars[[key]] <- c(pvars[[key]], value) |> purrr::discard(is.null) |>
+    unique() |> sort()
+  pvars
+}
+
 #' Convert to a reveal.js presentation
 #'
 #' Format for converting from R Markdown to a reveal.js presentation.
@@ -152,6 +182,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
   }
 
   # base pandoc options for all reveal.js output
+  pandoc_vars <- list()
   args <- c()
 
 
@@ -185,19 +216,18 @@ revealjs_6_presentation <- function(incremental = FALSE,
     args <- c(args, "--incremental")
 
   # centering
-  jsbool <- function(value) ifelse(value, "true", "false")
-  args <- c(args, pandoc_variable_arg("center", jsbool(center)))
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "center", center)
 
   # controls
-  args <- c(args, pandoc_variable_arg("controls", jsbool(controls)))
+pandoc_vars <- append_pandoc_var(pandoc_vars, "controls", controls)
 
   # width and height
   if (! is.null(width))
-    args <- c(args, "--variable", paste0("width=", width))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "width", width)
   if (! is.null(height))
-    args <- c(args, "--variable", paste0("height=", height))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "height", height)
   if (! is.null(margin))
-    args <- c(args, "--variable", paste0("margin=", margin))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "margin", margin)
 
   # slide level
   args <- c(args, "--slide-level", as.character(slide_level))
@@ -222,12 +252,12 @@ revealjs_6_presentation <- function(incremental = FALSE,
       theme_dark <- TRUE
   }
   if (theme_dark) {
-    args <- c(args, pandoc_variable_arg("theme-dark", 'true'))
+    pandoc_vars <- c(pandoc_vars, list("theme-dark" = 'true'))
   }
   if (is.null(theme)) {
-    args <- c(args, pandoc_variable_arg('local-theme', custom_theme))
+    pandoc_vars <- c(pandoc_vars, list('local-theme' = custom_theme))
   } else {
-    args <- c(args, pandoc_variable_arg("theme", theme))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "theme", theme)
   }
 
 
@@ -241,7 +271,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
       transition <- custom_transition
     }
   }
-  args <- c(args, pandoc_variable_arg("transition", transition))
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "transition", transition)
 
   # background_transition
   background_transition <- match.arg(background_transition, revealjs_6_transitions())
@@ -252,53 +282,54 @@ revealjs_6_presentation <- function(incremental = FALSE,
       background_transition <- custom_background_transition
     }
   }
-  args <- c(args, pandoc_variable_arg("backgroundTransition", background_transition))
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "backgroundTransition", background_transition)
 
   # use history
-  args <- c(args, pandoc_variable_arg("history", "true"))
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "history", "true")
 
   # use hash
-  args <- c(args, pandoc_variable_arg("hash", "true"))
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "hash", "true")
 
   # mathjax-version
   if (! is.null(mathjax_version)) {
     message("Mathjax version = ", mathjax_version)
     mjv <- as.integer(floor(as.numeric(mathjax_version)))
     if (mjv == 4L) {
-      args <- c(args, pandoc_variable_arg("mathjax-version", mjv),
-                pandoc_variable_arg("mathjax4", TRUE))
+      pandoc_vars <- pandoc_vars |>
+        append_pandoc_var("mathjax-version", mjv) |>
+        append_pandoc_var("mathjax4", "true")
       if (! is.null(mathjax_font) && mathjax_font != "default") {
-        args <- c(args, pandoc_variable_arg("mathjax-font",
-                                            mathjax_font))
+        pandoc_vars <- append_pandoc_var(pandoc_vars, "mathjax-font",
+                                         mathjax_font)
         }
     } else if (mjv == 3L) {
-      args <- c(args, pandoc_variable_arg("mathjax-version", mjv),
-                pandoc_variable_arg("mathjax3", TRUE))
+      pandoc_vars <- pandoc_vars |>
+        append_pandoc_var("mathjax-version", mjv) |>
+        append_pandoc_var("mathjax3", "true")
     }
   }
 
   # mathjax-scale
   if (! is.null(mathjax_scale)) {
-    args <- c(args, pandoc_variable_arg("mathjax-scale", mathjax_scale))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "mathjax-scale",
+                                     mathjax_scale)
   }
 
   # additional reveal options
   if (is.list(reveal_options)) {
     add_reveal_option <- function(option, value) {
-      if (is.logical(value))
-        value <- jsbool(value)
-      else if (is.character(value)) {
-        # value <- paste0("'", value, "'")
-      }
-      args <<- c(args, pandoc_variable_arg(option, value))
+      pandoc_vars <<- append_pandoc_var(pandoc_vars, option, value)
     }
 
     default_options <- revealjs_6_defaults() |>
       purrr::compact() |> purrr::discard(\(x) all(is.na(x)))
 
     message("  original reveal_options = [\n",
-            str_c("    ", purrr::imap(reveal_options,
-                               \(val, key) str_c(key, ": ", str_c(val, collapse = ", "))),
+            stringr::str_c("    ",
+                  purrr::imap(reveal_options,
+                              \(val, key)
+                              stringr::str_c(key, ": ",
+                                    stringr::str_c(val, collapse = ", "))),
                   collapse = ",\n"),
             "\n  ]")
 
@@ -309,8 +340,11 @@ revealjs_6_presentation <- function(incremental = FALSE,
     }
 
     message("  updated reveal_options = [\n",
-            str_c("    ", purrr::imap(reveal_options,
-                               \(val, key) str_c(key, ": ", str_c(val, collapse = ", "))),
+            stringr::str_c("    ", purrr::imap(reveal_options,
+                               \(val, key)
+                               stringr::str_c(key, ": ",
+                                     stringr::str_c(val, collapse = ", "))
+                               ),
                   collapse = ",\n"),
             "\n  ]")
 
@@ -335,7 +369,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   # reveal plugins
   if (is.character(reveal_plugins)) {
-    message("plugins = [", str_c(reveal_plugins, collapse = ", "), "]")
+    message("plugins = [", stringr::str_c(reveal_plugins, collapse = ", "), "]")
     # validate that we need to use self_contained for plugins
     if (self_contained)
       stop("Using reveal_plugins requires self_contained: false")
@@ -352,7 +386,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
     # add plugins
     sapply(reveal_plugins, function(plugin) {
-      args <<- c(args, pandoc_variable_arg(paste0("plugin-", plugin), "1"))
+      pandoc_vars <<- append_pandoc_var(pandoc_vars,
+                                        paste0("plugin-", plugin), "1")
       # if (plugin %in% c("chalkboard", "menu")) {
       #   extra_dependencies <<- append(extra_dependencies,
       #                                 list(rmarkdown::html_dependency_font_awesome()))
@@ -362,19 +397,17 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   # TeX extensions for MathJax
   if (! is.null(tex_extensions)) {
-    args <- c(args, sapply(tex_extensions, function(ext) {
-      pandoc_variable_arg('mathjax-packages', ext)
-    }))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, 'mathjax-packages',
+                                     tex_extensions)
   }
 
   # TeX macro definitions for MathJax
   if (! is.null(tex_defs)) {
-    args <- c(args, sapply(tex_defs, function(x) {
-      pandoc_variable_arg('tex-macros',
-                          gsub('\\','\\\\',
-                               paste0(x$name, ': "', x$def, '"'),
-                               fixed=TRUE))
-    }))
+    pandoc_vars <- append_pandoc_var(
+      pandoc_vars, 'tex-macros',
+      purrr::map_chr(\(x) stringr::str_c(x$name, ': "', x$def, '"') |>
+                stringr::str_replace_all(stringr::fixed('\\'), '\\\\'))
+    )
   }
 
   # content includes
@@ -393,9 +426,9 @@ revealjs_6_presentation <- function(incremental = FALSE,
   # message("Base extensions = [", str_c(markdown_extensions, collapse = ", "), "]")
 
   if(! is.null(md_extensions)) {
-    user_md_extensions = str_extract_all(md_extensions, "([+-])([A-Za-z0-9_]+)") %>%
+    user_md_extensions = stringr::str_extract_all(md_extensions, "([+-])([A-Za-z0-9_]+)") %>%
       simplify() %>% tibble(extension = .) %>%
-      mutate(value = str_detect(extension, '^\\+'), extension = str_sub(extension, 2))
+      mutate(value = stringr::str_detect(extension, '^\\+'), extension = stringr::str_sub(extension, 2))
 
     # message("User extensions = [", str_c(md_extensions, collapse = ", "), "]")
     # message("Processed User extensions = [", str_c(user_md_extensions, collapse = ", "), "]")
@@ -406,8 +439,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
   }
 
   markdown_extensions <- markdown_extensions %>%
-    transmute(string = str_c(ifelse(value, "+", "-"), extension)) %>%
-    simplify() %>% str_c(collapse = "")
+    transmute(string = stringr::str_c(ifelse(value, "+", "-"), extension)) %>%
+    simplify() %>% stringr::str_c(collapse = "")
 
   # message("Merged extensions = [", str_c(markdown_extensions, collapse = ", "), "]")
 
@@ -477,13 +510,30 @@ revealjs_6_presentation <- function(incremental = FALSE,
     }
     message("setting revealjs-url to ", revealjs_path,
             " in pre-processor")
-    args <- c(args, pandoc_variable_arg("revealjs-url", revealjs_path))
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "revealjs-url",
+                                     revealjs_path)
     if (! is.null(custom_asset_path) && ! is.na(custom_asset_path)) {
       message("setting local-asset-url to ", custom_asset_path,
               " in pre-processor")
-      args <- c(args, pandoc_variable_arg("local-asset-url",
-                                          custom_asset_path))
+      pandoc_vars <- append_pandoc_var(pandoc_vars,
+                                       "local-asset-url",
+                                       custom_asset_path)
     }
+
+    message("pandoc variables = [\n",
+            stringr::str_c("    ", names(pandoc_vars), " = ",
+                  purrr::map_chr(pandoc_vars, \(x) stringr::str_c(x, collapse = ", ")),
+                  collapse = ",\n"),
+            "  ]")
+
+    args <- c(args,
+              purrr::imap(
+                pandoc_vars,
+                \(values, name) purrr::map(
+                  values,
+                  \(val) pandoc_variable_arg(name, val)
+                  )
+                ) |> unlist())
 
     # highlight
     message("setting highlight args in pre-processor")
