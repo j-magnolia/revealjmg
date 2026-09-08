@@ -2,7 +2,7 @@ pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2026-09-08T02:53Z
+last_built: 2026-09-08T02:56Z
 urls:
   reference: https://j-magnolia.github.io/revealjmg/reference
   article: https://j-magnolia.github.io/revealjmg/articles
