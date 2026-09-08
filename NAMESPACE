@@ -17,6 +17,8 @@ importFrom(stringr,
   str_c,
   str_detect,
   str_extract_all,
-  str_sub
+  str_replace_all,
+  str_sub,
+  str_to_lower
 )
 importFrom(tibble,tibble)

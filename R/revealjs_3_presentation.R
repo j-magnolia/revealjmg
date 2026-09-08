@@ -382,7 +382,10 @@ revealjs_3_presentation <- function(incremental = FALSE,
     }
     if (semver::parse_version(reveal_version) >=
         semver::parse_version("5.0.0")) {
-      revealjs_path <- file.path(revealjs_path, "dist")
+      if (basename(revealjs_path) |>
+          stringr::str_to_lower() != "dist") {
+        revealjs_path <- file.path(revealjs_path, "dist")
+      }
     }
     if (identical(custom_asset_path, "default")) {
       custom_asset_path <-  revealjs_path

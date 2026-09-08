@@ -475,7 +475,10 @@ pandoc_vars <- append_pandoc_var(pandoc_vars, "controls", controls)
       revealjs_path <- file.path(reveal_location, reveal_home)
     }
     if (reveal_new_version) {
-      revealjs_path <- file.path(revealjs_path, "dist")
+      if (basename(revealjs_path) |>
+          stringr::str_to_lower() != "dist") {
+        revealjs_path <- file.path(revealjs_path, "dist")
+      }
     }
     if (is.null(custom_asset_path) || identical(custom_asset_path, "default")) {
       custom_asset_path <-  revealjs_path
