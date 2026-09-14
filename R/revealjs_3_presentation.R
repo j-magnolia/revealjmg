@@ -382,9 +382,9 @@ revealjs_3_presentation <- function(incremental = FALSE,
     }
     if (semver::parse_version(reveal_version) >=
         semver::parse_version("5.0.0")) {
-      if (basename(revealjs_path) |>
-          stringr::str_to_lower() != "dist") {
-        revealjs_path <- file.path(revealjs_path, "dist")
+        dist_path <- "dist"
+    } else {
+        dist_path <- NULL
       }
     }
     if (identical(custom_asset_path, "default")) {
@@ -395,8 +395,15 @@ revealjs_3_presentation <- function(incremental = FALSE,
               ", custom_asset_path = ", custom_asset_path,
               "current directory = ", getwd(), ", output_dir = ",
               output_dir)
+      if (! is.null(dist)) {
+        src_path <- file.path(revealjs_path, dist_path)
+        dest_path <- file.path(lib_dir, dist_path)
+      } else {
+        src_path <- revealjs_path
+        dest_path <- lib_dir
+      }
       revealjs_path <- relative_to(
-        output_dir, render_supporting_files(revealjs_path, lib_dir))
+        output_dir, render_supporting_files(src_dir, dest_dir))
       custom_asset_path <- relative_to(output_dir, custom_asset_path)
       message("revealjs_path = ", revealjs_path,
               ", custom_asset_path = ", custom_asset_path,

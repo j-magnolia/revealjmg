@@ -211,6 +211,54 @@ revealjs_6_presentation <- function(incremental = FALSE,
     args <- c(args, "--template", pandoc_path_arg(t))
   }
 
+  # author
+  if (exists("author")) {
+    if (! exists("author_meta")) {
+      author_meta <- author
+    }
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "author", author)
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "author-meta",
+                                     author_meta)
+  }
+
+  # date
+  if (! exists("date")) {
+    if (exists("date_meta") && ! exists("date")) {
+      date <- date_meta
+    } else if (exists("class_date")) {
+      date <- class_date
+    } else if (exists("semester")) {
+      date <- semester
+    } else if (exists("class_no")) {
+      date <- stringr::str_c("Class #", class_no)
+    }
+  }
+
+  if (exists("date")) {
+    pandoc_vars <- append_pandoc_var(pandoc_vars, "date", date)
+
+    if (exists("date_meta")) {
+      pandoc_vars <- append_pandoc_var(pandoc_vars, "date-meta",
+                                       date_meta)
+    } else {
+      pandoc_vars <- append_pandoc_var(pandoc_vars, "date-meta", date)
+    }
+
+    if (exists("class_date")) {
+      pandoc_vars <- append_pandoc_var(pandoc_vars, "class-date",
+                                       class_date)
+    } else {
+      pandoc_vars <- append_pandoc_var(pandoc_vars, "class-date", date)
+    }
+
+    if (exists("class_no")) {
+      pandoc_vars <- append_pandoc_var(pandoc_vars, "class-no",
+                                       class_no)
+    }
+  }
+
+
+
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
@@ -219,7 +267,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
   pandoc_vars <- append_pandoc_var(pandoc_vars, "center", center)
 
   # controls
-pandoc_vars <- append_pandoc_var(pandoc_vars, "controls", controls)
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "controls", controls)
 
   # width and height
   if (! is.null(width))
@@ -271,10 +319,12 @@ pandoc_vars <- append_pandoc_var(pandoc_vars, "controls", controls)
       transition <- custom_transition
     }
   }
-  pandoc_vars <- append_pandoc_var(pandoc_vars, "transition", transition)
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "transition",
+                                   transition)
 
   # background_transition
-  background_transition <- match.arg(background_transition, revealjs_6_transitions())
+  background_transition <- match.arg(background_transition,
+                                     revealjs_6_transitions())
   if (identical(background_transition, 'custom')) {
     if (is.null(custom_background_transition)) {
       stop("Missing custom_background_transition in YAML header")
@@ -282,7 +332,8 @@ pandoc_vars <- append_pandoc_var(pandoc_vars, "controls", controls)
       background_transition <- custom_background_transition
     }
   }
-  pandoc_vars <- append_pandoc_var(pandoc_vars, "backgroundTransition", background_transition)
+  pandoc_vars <- append_pandoc_var(pandoc_vars, "backgroundTransition",
+                                   background_transition)
 
   # use history
   pandoc_vars <- append_pandoc_var(pandoc_vars, "history", "true")
