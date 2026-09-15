@@ -24,13 +24,13 @@ Source:
 [`DESCRIPTION`](https://github.com/j-magnolia/revealjmg/blob/main/DESCRIPTION)
 
 El Hattab H, Allaire J, Gilligan J (2026). *revealjmg: R Markdown Format
-for 'reveal.js' Presentations*. R package version 2.1.0,
+for 'reveal.js' Presentations*. R package version 2.1.1,
 <https://github.com/j-magnolia/revealjmg>.
 
     @Manual{,
       title = {revealjmg: R Markdown Format for 'reveal.js' Presentations},
       author = {Hakim {El Hattab} and JJ Allaire and J. Magnolia Gilligan},
       year = {2026},
-      note = {R package version 2.1.0},
+      note = {R package version 2.1.1},
       url = {https://github.com/j-magnolia/revealjmg},
     }

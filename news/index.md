@@ -1,5 +1,9 @@
 # Changelog
 
+## revealjmg 2.1.1
+
+- Updated to handle putting date into the title slide and metadata.
+
 ## revealjmg 2.1.0
 
 - Major internal refactoring to do better at merging user options and
