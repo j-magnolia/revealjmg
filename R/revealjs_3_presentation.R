@@ -382,10 +382,9 @@ revealjs_3_presentation <- function(incremental = FALSE,
     }
     if (semver::parse_version(reveal_version) >=
         semver::parse_version("5.0.0")) {
-        dist_path <- "dist"
+      dist_path <- "dist"
     } else {
-        dist_path <- NULL
-      }
+      dist_path <- NULL
     }
     if (identical(custom_asset_path, "default")) {
       custom_asset_path <-  revealjs_path
@@ -395,7 +394,7 @@ revealjs_3_presentation <- function(incremental = FALSE,
               ", custom_asset_path = ", custom_asset_path,
               "current directory = ", getwd(), ", output_dir = ",
               output_dir)
-      if (! is.null(dist)) {
+      if (! is.null(dist_path)) {
         src_path <- file.path(revealjs_path, dist_path)
         dest_path <- file.path(lib_dir, dist_path)
       } else {

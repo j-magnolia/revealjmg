@@ -25,8 +25,9 @@ append_pandoc_var <- function(pvars, key, value) {
   if(is.logical(value)) {
     value <- jsbool(value)
   }
-  pvars[[key]] <- c(pvars[[key]], value) |> purrr::discard(is.null) |>
+  new_val <- c(pvars[[key]], value) |> purrr::discard(is.null) |>
     unique() |> sort()
+  pvars[[key]] <- new_val
   pvars
 }
 
@@ -113,7 +114,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
                                     extra_dependencies = NULL,
                                     custom_plugins = NULL,
                                     no_postprocess = FALSE,
-                                  ...) {
+                                    ...) {
 
   message("revealjmg::revealjs_6_presentation: version: ",
           reveal_version)
@@ -222,7 +223,12 @@ revealjs_6_presentation <- function(incremental = FALSE,
   }
 
   # date
-  if (! exists("date")) {
+  if (exists("date")) {
+    if (is.function(date)) {
+      date <- NULL
+    }
+  }
+  if (is.null(date)) {
     if (exists("date_meta") && ! exists("date")) {
       date <- date_meta
     } else if (exists("class_date")) {
@@ -352,7 +358,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
       if (! is.null(mathjax_font) && mathjax_font != "default") {
         pandoc_vars <- append_pandoc_var(pandoc_vars, "mathjax-font",
                                          mathjax_font)
-        }
+      }
     } else if (mjv == 3L) {
       pandoc_vars <- pandoc_vars |>
         append_pandoc_var("mathjax-version", mjv) |>
@@ -377,11 +383,11 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
     message("  original reveal_options = [\n",
             stringr::str_c("    ",
-                  purrr::imap(reveal_options,
-                              \(val, key)
-                              stringr::str_c(key, ": ",
-                                    stringr::str_c(val, collapse = ", "))),
-                  collapse = ",\n"),
+                           purrr::imap(reveal_options,
+                                       \(val, key)
+                                       stringr::str_c(key, ": ",
+                                                      stringr::str_c(val, collapse = ", "))),
+                           collapse = ",\n"),
             "\n  ]")
 
     for (option in names(default_options)) {
@@ -392,11 +398,11 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
     message("  updated reveal_options = [\n",
             stringr::str_c("    ", purrr::imap(reveal_options,
-                               \(val, key)
-                               stringr::str_c(key, ": ",
-                                     stringr::str_c(val, collapse = ", "))
-                               ),
-                  collapse = ",\n"),
+                                               \(val, key)
+                                               stringr::str_c(key, ": ",
+                                                              stringr::str_c(val, collapse = ", "))
+            ),
+            collapse = ",\n"),
             "\n  ]")
 
 
@@ -457,7 +463,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
     pandoc_vars <- append_pandoc_var(
       pandoc_vars, 'tex-macros',
       purrr::map_chr(\(x) stringr::str_c(x$name, ': "', x$def, '"') |>
-                stringr::str_replace_all(stringr::fixed('\\'), '\\\\'))
+                       stringr::str_replace_all(stringr::fixed('\\'), '\\\\'))
     )
   }
 
@@ -515,6 +521,9 @@ revealjs_6_presentation <- function(incremental = FALSE,
     args <- c()
 
     # reveal.js
+    if (exists("reveal_location")) {
+      message("* reveal_location = ", reveal_location)
+    }
     reveal_home <- paste0("reveal.js-", reveal_version)
     if (identical(reveal_location, "default")) {
       revealjs_path <- system.file(reveal_home, package = "revealjmg")
@@ -523,12 +532,18 @@ revealjs_6_presentation <- function(incremental = FALSE,
         revealjs_path <- file.path(lib_dir, reveal_home)
       }
     } else {
-      revealjs_path <- file.path(reveal_location, reveal_home)
+      if (basename(reveal_location) == reveal_home) {
+        revealjs_path <- reveal_location
+      } else {
+        revealjs_path <- file.path(reveal_location, reveal_home)
+      }
     }
     if (reveal_new_version) {
       if (basename(revealjs_path) |>
           stringr::str_to_lower() != "dist") {
-        revealjs_path <- file.path(revealjs_path, "dist")
+        dist_path <- "dist"
+      } else {
+        dist_path <- NULL
       }
     }
     if (is.null(custom_asset_path) || identical(custom_asset_path, "default")) {
@@ -544,21 +559,29 @@ revealjs_6_presentation <- function(incremental = FALSE,
               ",\n  output_dir = ",
               output_dir)
       old_rjs_path <- revealjs_path
+      if (! is.null(dist_path)) {
+        src_path <- file.path(revealjs_path, dist_path)
+      } else {
+        src_path <- revealjs_path
+      }
+      dest_path <- lib_dir
       revealjs_path <- relative_to(
-        output_dir, render_supporting_files(revealjs_path, lib_dir))
-      if (custom_asset_path == old_rjs_path) {
+        output_dir,
+        render_supporting_files(src_path, dest_path)
+      )
+      if (custom_asset_path %in% c(old_rjs_path, src_path)) {
         custom_asset_path <- revealjs_path
       } else {
-      custom_asset_path <- relative_to(
-        output_dir,
-        render_supporting_files(custom_asset_path, lib_dir))
+        custom_asset_path <- relative_to(
+          output_dir,
+          render_supporting_files(custom_asset_path, lib_dir))
       }
       message("revealjs_path = ", revealjs_path,
               ",\n  custom_asset_path = ", custom_asset_path,
               ",\n  current directory = ", getwd(),
-              ",\n  output_dir = ",
-              output_dir)
-    }else  {
+              ",\n  output_dir = ", output_dir
+      )
+    } else  {
       revealjs_path <- pandoc_path_arg(revealjs_path)
       custom_asset_path <- pandoc_path_arg(custom_asset_path)
     }
@@ -576,8 +599,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
     message("pandoc variables = [\n",
             stringr::str_c("    ", names(pandoc_vars), " = ",
-                  purrr::map_chr(pandoc_vars, \(x) stringr::str_c(x, collapse = ", ")),
-                  collapse = ",\n"),
+                           purrr::map_chr(pandoc_vars, \(x) stringr::str_c(x, collapse = ", ")),
+                           collapse = ",\n"),
             "  ]")
 
     args <- c(args,
@@ -586,8 +609,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
                 \(values, name) purrr::map(
                   values,
                   \(val) pandoc_variable_arg(name, val)
-                  )
-                ) |> unlist())
+                )
+              ) |> unlist())
 
     # highlight
     message("setting highlight args in pre-processor")
