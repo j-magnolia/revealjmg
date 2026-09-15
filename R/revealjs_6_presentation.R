@@ -189,6 +189,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   # template path and assets
   default_template <- file.path(reveal_resources(), 'default.html')
+  t <- default_template
   if (identical(template, "default")) {
     message("Using default template")
     t <- default_template
@@ -208,9 +209,9 @@ revealjs_6_presentation <- function(incremental = FALSE,
         t <- default_template
       }
     }
-    message("Using template ", t)
-    args <- c(args, "--template", pandoc_path_arg(t))
   }
+  message("Using template ", t)
+  args <- c(args, "--template", pandoc_path_arg(t))
 
   # author
   if (exists("author")) {
