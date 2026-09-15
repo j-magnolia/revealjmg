@@ -539,11 +539,10 @@ revealjs_6_presentation <- function(incremental = FALSE,
       }
     }
     if (reveal_new_version) {
+      dist_path <- NULL
       if (basename(revealjs_path) |>
           stringr::str_to_lower() != "dist") {
         dist_path <- "dist"
-      } else {
-        dist_path <- NULL
       }
     }
     if (is.null(custom_asset_path) || identical(custom_asset_path, "default")) {

@@ -394,13 +394,15 @@ revealjs_3_presentation <- function(incremental = FALSE,
               ", custom_asset_path = ", custom_asset_path,
               "current directory = ", getwd(), ", output_dir = ",
               output_dir)
+
+      src_path <- revealjs_path
+      dest_path <- lib_dir
+
       if (! is.null(dist_path)) {
         src_path <- file.path(revealjs_path, dist_path)
         dest_path <- file.path(lib_dir, dist_path)
-      } else {
-        src_path <- revealjs_path
-        dest_path <- lib_dir
       }
+
       revealjs_path <- relative_to(
         output_dir, render_supporting_files(src_dir, dest_dir))
       custom_asset_path <- relative_to(output_dir, custom_asset_path)
