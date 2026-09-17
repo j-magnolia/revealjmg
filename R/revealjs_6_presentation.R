@@ -517,6 +517,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
       lib_dir <- files_dir
+    lib_dir <- lib_dir |> stringr::str_replace("/+$", "")
 
     # extra args
     args <- c()
@@ -539,6 +540,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
         revealjs_path <- file.path(reveal_location, reveal_home)
       }
     }
+    revealjs_path <- revealjs_path |> stringr::str_replace("/+$", "")
     if (reveal_new_version) {
       dist_path <- NULL
       if (basename(revealjs_path) |>
@@ -549,6 +551,8 @@ revealjs_6_presentation <- function(incremental = FALSE,
     if (is.null(custom_asset_path) || identical(custom_asset_path, "default")) {
       custom_asset_path <-  revealjs_path
     }
+    custom_asset_path <- custom_asset_path |>
+      stringr::str_replace("/+$", "")
     if (!self_contained || identical(.Platform$OS.type, "windows")) {
       message("rendering: self_contained = ", self_contained,
               ", OS = ", .Platform$OS.type)
@@ -564,7 +568,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
       } else {
         src_path <- revealjs_path
       }
-      dest_path <- lib_dir
+      dest_path <- lib_dir |> stringr::str_replace("/+$", "")
       revealjs_path <- relative_to(
         output_dir,
         render_supporting_files(src_path, dest_path)
@@ -574,7 +578,7 @@ revealjs_6_presentation <- function(incremental = FALSE,
       } else {
         custom_asset_path <- relative_to(
           output_dir,
-          render_supporting_files(custom_asset_path, lib_dir))
+          render_supporting_files(custom_asset_path, dest_path))
       }
       message("revealjs_path = ", revealjs_path,
               ",\n  custom_asset_path = ", custom_asset_path,
