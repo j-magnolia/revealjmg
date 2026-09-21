@@ -1,5 +1,15 @@
 # Changelog
 
+## revealjmg 2.1.2
+
+- Replace the original
+  [`rmarkdown::render_supporting_files()`](https://pkgs.rstudio.com/rmarkdown/reference/render_supporting_files.html)
+  to a new
+  [`render_supporting_files_2()`](https://j-magnolia.github.io/revealjmg/reference/render_supporting_files_2.md),
+  which copies missing and modified files from the source directory to
+  the destination. This helps keep the destination tree updated when I
+  rebuild things like `reveal.js` themes and re-render documents.
+
 ## revealjmg 2.1.1
 
 - Updated to handle putting date into the title slide and metadata.
