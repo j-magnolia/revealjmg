@@ -213,59 +213,6 @@ revealjs_6_presentation <- function(incremental = FALSE,
   message("Using template ", t)
   args <- c(args, "--template", pandoc_path_arg(t))
 
-  # author
-  if (exists("author")) {
-    if (! exists("author_meta")) {
-      author_meta <- author
-    }
-    pandoc_vars <- append_pandoc_var(pandoc_vars, "author", author)
-    pandoc_vars <- append_pandoc_var(pandoc_vars, "author-meta",
-                                     author_meta)
-  }
-
-  # date
-  if (exists("date")) {
-    if (is.function(date)) {
-      date <- NULL
-    }
-  }
-  if (is.null(date)) {
-    if (exists("date_meta") && ! exists("date")) {
-      date <- date_meta
-    } else if (exists("class_date")) {
-      date <- class_date
-    } else if (exists("semester")) {
-      date <- semester
-    } else if (exists("class_no")) {
-      date <- stringr::str_c("Class #", class_no)
-    }
-  }
-
-  if (exists("date")) {
-    pandoc_vars <- append_pandoc_var(pandoc_vars, "date", date)
-
-    if (exists("date_meta")) {
-      pandoc_vars <- append_pandoc_var(pandoc_vars, "date-meta",
-                                       date_meta)
-    } else {
-      pandoc_vars <- append_pandoc_var(pandoc_vars, "date-meta", date)
-    }
-
-    if (exists("class_date")) {
-      pandoc_vars <- append_pandoc_var(pandoc_vars, "class-date",
-                                       class_date)
-    } else {
-      pandoc_vars <- append_pandoc_var(pandoc_vars, "class-date", date)
-    }
-
-    if (exists("class_no")) {
-      pandoc_vars <- append_pandoc_var(pandoc_vars, "class-no",
-                                       class_no)
-    }
-  }
-
-
-
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
@@ -514,6 +461,11 @@ revealjs_6_presentation <- function(incremental = FALSE,
            call. = FALSE)
     }
 
+    message("metadata: ", class(metadata))
+    for (n in names(metadata)) {
+      message("  * ", n, ": ", metadata[[n]])
+    }
+
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
       lib_dir <- files_dir
@@ -601,11 +553,66 @@ revealjs_6_presentation <- function(incremental = FALSE,
                                        custom_asset_path)
     }
 
+    # date
+    if (tibble::has_name(metadata, "date")) {
+      date <- metadata$date
+      message("date exists": date)
+    } else {
+      message("date does not exist: setting to NULL")
+      date <- NULL
+    }
+
+    if (is.null(date)) {
+      message("Date is null")
+      if (tibble::has_name(metadata, "date_meta")) {
+        date <- metadata$date_meta
+        message("Setting date from date_meta: ", date)
+      } else if (tibble::has_name(metadata, "class_date")) {
+        date <- metadata$class_date
+        message("Setting date from class_date: ", date)
+      } else if (tibble::has_name(metadata, "semester")) {
+        date <- metadata$semester
+        message("Setting date from semester: ", date)
+      } else if (tibble::has_name(metadata, "class_no")) {
+        date <- stringr::str_c("Class #", metadata$class_no)
+        message("Setting date from class_no: ", date)
+      }
+    }
+
+    if (exists("date") && ! is.null(date)) {
+      message("Setting pandoc date to ", date)
+      pandoc_vars <- append_pandoc_var(pandoc_vars, "date", date)
+
+      if (tibble::has_name(metadata, "date_meta")) {
+        message("Setting pandoc date-meta to ", metadata$date_meta)
+        pandoc_vars <- append_pandoc_var(pandoc_vars, "date-meta",
+                                         metadata$date_meta)
+      } else {
+        pandoc_vars <- append_pandoc_var(pandoc_vars, "date-meta", date)
+      }
+
+      if (tibble::has_name(metadata, "class_date")) {
+        pandoc_vars <- append_pandoc_var(pandoc_vars, "class-date",
+                                         metadata$class_date)
+      } else {
+        pandoc_vars <- append_pandoc_var(pandoc_vars, "class-date",
+                                         metadata$date)
+      }
+
+      if (tibble::has_name(metadata, "class_no")) {
+        pandoc_vars <- append_pandoc_var(pandoc_vars, "class-no",
+                                         metadata$class_no)
+      }
+    }
+
     message("pandoc variables = [\n",
-            stringr::str_c("    ", names(pandoc_vars), " = ",
-                           purrr::map_chr(pandoc_vars, \(x) stringr::str_c(x, collapse = ", ")),
-                           collapse = ",\n"),
-            "  ]")
+            stringr::str_c(
+              "    ", names(pandoc_vars), " = ",
+              purrr::map_chr(pandoc_vars,
+                             \(x) stringr::str_c(x, collapse = ", ")),
+              collapse = ",\n"),
+            "  ]"
+            )
 
     args <- c(args,
               purrr::imap(
