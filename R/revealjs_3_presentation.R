@@ -404,7 +404,7 @@ revealjs_3_presentation <- function(incremental = FALSE,
       }
 
       revealjs_path <- relative_to(
-        output_dir, render_supporting_files(src_dir, dest_dir))
+        output_dir, render_supporting_files(src_path, dest_path))
       custom_asset_path <- relative_to(output_dir, custom_asset_path)
       message("revealjs_path = ", revealjs_path,
               ", custom_asset_path = ", custom_asset_path,
