@@ -549,6 +549,11 @@ revealjs_6_presentation <- function(incremental = FALSE,
               ",\n  output_dir = ", output_dir
       )
     } else  {
+      old_rjs_path <- revealjs_path
+      revealjs_path <- file.path(revealjs_path, dist_path)
+      if (custom_asset_path == old_rjs_path) {
+        custom_asset_path <- revealjs_path
+      }
       revealjs_path <- pandoc_path_arg(revealjs_path)
       custom_asset_path <- pandoc_path_arg(custom_asset_path)
     }
