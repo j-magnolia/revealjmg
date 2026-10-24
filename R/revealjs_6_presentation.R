@@ -408,11 +408,21 @@ revealjs_6_presentation <- function(incremental = FALSE,
 
   # TeX macro definitions for MathJax
   if (! is.null(tex_defs)) {
-    pandoc_vars <- append_pandoc_var(
-      pandoc_vars, 'tex-macros',
-      purrr::map_chr(\(x) stringr::str_c(x$name, ': "', x$def, '"') |>
-                       stringr::str_replace_all(stringr::fixed('\\'), '\\\\'))
+    pandoc_vars <- purrr::reduce(tex_defs,
+      \(pvar, x) append_pandoc_var(
+        pvar, 'tex-macros',
+        stringr::str_c(x$name, ': "', x$def, '"') |>
+          stringr::str_replace_all(stringr::fixed('\\'), '\\\\')
+      ),
+      .init = pandoc_vars
     )
+
+    message("Installed tex_defs: pandoc vars = \n",
+            purrr::imap(
+              pandoc_vars,
+              \(x, i) str_c("  ", i, ": ", x, collapse  = "\n")
+              )
+            )
   }
 
   # content includes

@@ -154,11 +154,15 @@ revealjs_presentation <- function(incremental = FALSE,
     doc_fn <- revealjs_3_presentation
   }
 
-  message("revealjmg::revealjs_presentation: args = [",
+  message("revealjmg::revealjs_presentation: args = [\n  ",
           purrr::imap(args,
-                      ~stringr::str_c(.y, ": ",
-                                      ifelse(is.null(.x), "NULL", .x))
-                      ) |> stringr::str_c(collapse = ",\n  "),
+                      \(x, i) {
+                        x <- unlist(x)
+                        if (is.null(x)) x <- "NULL"
+                        stringr::str_c("  ", i, ": ", x,
+                                       collapse = ",\n")
+                      }) |>
+            stringr::str_c(collapse = ",\n  "),
           "  ]"
           )
   rlang::exec(doc_fn, !!!args)
